@@ -1,0 +1,2 @@
+name,id,demand class,base price,export value,price variability,utility,origin,tags,stack size,cargo space,icon,sound id,sound id drop,order,economyTier,econUnit,iconWidthMult,plugin,desc
+Player Core,ds_playercore,ai_cores,,,0,1,,"nonecon, no_loss_from_combat, restricted, no_drop, no_sell",1,1,graphics/icons/cargo/ai_core_gamma.png,ai_core_pickup,ui_beta_core_drop,100,,,1,,

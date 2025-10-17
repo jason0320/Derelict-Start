@@ -1,0 +1,70 @@
+id,trigger,conditions,script,text,options,notes,,,,,,,,
+# nexus custom start interactions,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+ds_nexusOpen,OpenInteractionDialog,"$faction.id == derelict
+$customType == derelict_mothership
+$global.ds_nexusStart score:10000
+$player.commissionFactionId == derelict","ds_nexusStartRulecmd 0
+ShowImageVisual orbital","The Explorarium Mothership welcomes you into its graces, allowing you to make use of its services.","0:ds_nexusCargoPicker:Evaluate the Mothership' cargo
+10:ds_nexusProductionPicker:Request immediate production
+30:ds_nexusStorage:Access the storage network
+50:ds_nexusRepair:Initiate fleet repairs
+100:defaultLeave:Leave",,,,,,,,,,,,,
+ds_nexusDialog1,DialogOptionSelected,$option == ds_nexusCargoPicker,ds_nexusStartRulecmd 1,,,,,,,,,,,,,,,
+ds_nexusDialog2,DialogOptionSelected,$option == ds_nexusProductionPicker,ds_nexusStartRulecmd 2,,,,,,,,,,,,,,,
+ds_nexusDialog3,DialogOptionSelected,$option == ds_nexusStorage,"EndConversation NO_CONTINUE
+ds_nexusStartRulecmd 3",,,,,,,,,,,,,,,
+ds_nexusDialog4,DialogOptionSelected,$option == ds_nexusRepair,ds_nexusStartRulecmd 4,Your $shipOrFleet has been fully repaired at no cost.,,,,,,,,,,,,,,
+ds_nexusDeconstruct1,DialogOptionSelected,$option == ds_nexusDeconstructMain,"ds_nexusStartRulecmd 13
+AddTextSmall ""You may deconstruct automated hulls here, as long as they normally require the Automated Ships skill to recover.""
+AddTextSmall ""Doing so will destroy the ship, but will allow the Remnants to use the hull.""
+AddTextSmall ""Access to the faction's weapons, fighters and AI cores (if applicable) will be gained at 50/75/90% collection progress respectively."" highlight",,"0:ds_nexusDeconstruct:Deconstruct automated hulls
+30:ds_nexusRecap:View collection progress
+50:ds_nexusBack:Return
+",,,,,,,,,,,,,
+ds_nexusDeconstruct2,DialogOptionSelected,$option == ds_nexusDeconstruct,ds_nexusStartRulecmd 8,,,,,,,,,,,,,,,
+ds_nexusDeconstruct3,DialogOptionSelected,$option == ds_nexusRecap,ds_nexusStartRulecmd 12,,,,,,,,,,,,,,,
+ds_nexusDialog6,DialogOptionSelected,$option == ds_nexusDeconstructProceed,ds_nexusStartRulecmd 9,,,,,,,,,,,,,,,
+ds_nexusDialog7,DialogOptionSelected,$option == ds_nexusBack,ds_nexusStartRulecmd 5,,,,,,,,,,,,,,,
+ds_nexusDialog8,OpenCommLink,"$faction.id == derelict score:10000
+$entity.customType == derelict_mothership
+!$entity.isHostile
+$global.ds_nexusStart",ds_nexusStartRulecmd 5,,,# TODO: FINISH ADDING REMNANT RAID QUEST,,,,,,,,,,,,
+ds_nexusStorage1,MarketPostOpen,$id == ds_nexusStorage score:10000,"$tradeMode = OPEN 0
+FireBest MarketPostDock
+ds_nexusStartRulecmd 6",,,,,,,,,,,,,,,
+ds_nexusStorage2,TradePanelFlavorText,$id == ds_nexusStorage score:1000,,The flow of vast datastores bring with them opportunity. No distance is too great to retrieve a perfect simulacra of vessels and armaments once uploaded.,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+ds_nexusStorage3,PopulateOptions,"$id == ds_nexusStorage score:10000
+$menuState == main",ds_nexusStartRulecmd 7,,,,,,,,,,,,,,,
+ds_nexusComms,DialogOptionSelected,$option == ds_nexusComms,"BeginConversation nex_dissonant
+FireBest PickGreeting
+ds_nexusStartRulecmd 10",,,,,,,,,,,,,,,
+ds_nexusRedirect,DialogOptionSelected,$option == ds_nexusRedirect,"ds_nexusStartRulecmd 11
+ds_nexusStartRulecmd 5",,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+ds_nexusDefenderSkip,DialogOptionSelected,"$option == salExplore score:1000
+ds_getRemnantDefenders 1
+$global.ds_nexusStart
+$player.commissionFactionId == derelict","
+ds_getRemnantDefenders 2","A fleet of Remnant drones is guarding this object. They don't appear to recognize you yet.
+
+They're currently engaged in an automatic defensive protocol, but you may transmit your IFF code to disengage it.",0:ds_noyeetRemmies:Continue as normal,,,,,,,,,,,,,
+ds_nexusDefenderSkip2,DialogOptionSelected,$option == ds_yeetRemmies,ds_getRemnantDefenders 3,"Your $shipOrFleet chirps out a request with your transponder code, with a request to stand down. Some moments later, the drone defenders process the information and plod away from the wreck in search of a new task.",0:salBeatDefendersContinue:Continue,,,,,,,,,,,,,
+ds_nexusDefenderSkip3,DialogOptionSelected,$option == ds_noyeetRemmies,SalvageDefenderInteraction,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+# raid option,,,,,,,,,,,,,,,,,,
+ds_nexusPartyTimeShow,DialogOptionSelected,$option == ds_nexusPartyTimeShow,ds_nexusStartRulecmd 15,,"0:ds_nexusPartyTimeInit:Accept the request
+30:ds_nexusBack:Go back",,,,,,,,,,,,,
+ds_nexusPartyTimeInit,DialogOptionSelected,$option == ds_nexusPartyTimeInit,ds_nexusStartRulecmd 16,,0:ds_nexusBack:Continue,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,

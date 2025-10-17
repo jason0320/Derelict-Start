@@ -1,0 +1,11 @@
+{
+	"starts":[
+		{
+			"id":"ds_remnantStart",
+			"name":"Adrift",
+			"difficulty":"Normal",
+			"desc":"You are forever hated by most factions, but can use any Domain Mothership for restocking and other new fleet-related services.",
+			"className":"data.derelictstart.customStart.ds_remnantCustomStart",
+		},
+	],
+}

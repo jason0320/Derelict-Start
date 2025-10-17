@@ -1,0 +1,17 @@
+
+{
+
+	"plugins":{
+		"ds_remnantStartCombatPlugin":"data.derelictstart.customStart.ds_remnantStartCombatPlugin",
+	},  
+
+
+	"graphics":{
+		"icons":{
+		"derelictflag":"graphics/factions/domain_explorarium.png",
+	     },
+	},
+	"ruleCommandPackages":[
+		"data.derelictstart.scripts.rulecmd",
+	],	
+}
