@@ -26,12 +26,17 @@ class ds_nexusLocationIntel: BaseIntelPlugin() {
 
         val nexii = Global.getSector().getCustomEntitiesWithType("derelict_mothership")
         nexii.forEach {
-            if (it.starSystem.constellation.name.startsWith("The")){
-                info.addPara("${it.starSystem.name}, in ${it.starSystem.constellation.name}", 10f).setHighlight(it.starSystem.name)
+            if (it.starSystem.isInConstellation) {
+                if (it.starSystem.constellation.name.startsWith("The")){
+                    info.addPara("${it.starSystem.name}, in ${it.starSystem.constellation.name}", 10f).setHighlight(it.starSystem.name)
 
-            } else {
-                info.addPara("${it.starSystem.name}, in the ${it.starSystem.constellation.name}", 10f).setHighlight(it.starSystem.name)
+                } else {
+                    info.addPara("${it.starSystem.name}, in the ${it.starSystem.constellation.name}", 10f).setHighlight(it.starSystem.name)
 
+                }
+            }
+            else {
+                info.addPara("${it.starSystem.name}", 10f).setHighlight(it.starSystem.name)
             }
         }
 

@@ -1,3 +1,6 @@
+v0.3 (2025/10/18)
+- Show Intel Fixes
+
 v0.2 (2025/10/18)
 - Text Fixes
 
