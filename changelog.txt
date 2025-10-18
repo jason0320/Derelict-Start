@@ -1,3 +1,6 @@
+v0.4 (2025/10/18)
+- Add function to feed ships to Mothership as recipes
+
 v0.3 (2025/10/18)
 - Show Intel Fixes
 

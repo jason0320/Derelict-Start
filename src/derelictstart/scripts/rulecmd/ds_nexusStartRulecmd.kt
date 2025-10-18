@@ -116,17 +116,16 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
             dialog.optionPanel.setTooltip("ds_nexusProductionPicker", "Instantly produce Explorarium hulls and weapons to be delivered to your fleet.")
             dialog.optionPanel.addOption("Access the storage network", "ds_nexusStorage")
             dialog.optionPanel.setTooltip("ds_nexusStorage", "Allows you to refit your ships. Counts as a spaceport for hullmods that require a dock.")
-            //dialog.optionPanel.addOption("Initiate fleet repairs", "ds_nexusRepair")
-            //dialog.optionPanel.setTooltip("ds_nexusRepair", "A free automated repair procedure. Restores all ships to full CR and hull integrity at no cost.")
+            dialog.optionPanel.addOption("Initiate fleet repairs", "ds_nexusRepair")
+            dialog.optionPanel.setTooltip("ds_nexusRepair", "A free automated repair procedure. Restores all ships to full CR and hull integrity at no cost.")
             dialog.optionPanel.addOption("Manage automated hulls", "ds_nexusDeconstructMain")
             dialog.optionPanel.setTooltip("ds_nexusDeconstruct", "Destroy an automated hull to add it to the Explorarium' known hulls.")
            // if (!Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) && !Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusPartyTimeout")){
           //      dialog.optionPanel.addOption("Raid requests", "ds_nexusPartyTimeShow")
           //  } just fix it later.
-            dialog.optionPanel.addOption("Cut the comm link", "cutCommLinkNoText")
+            dialog.optionPanel.addOption("Leave", "defaultLeave")
             //dialog.optionPanel.setShortcut("ds_nexusRepair", Keyboard.KEY_A, false, false,false , false)
-            dialog.visualPanel.showPersonInfo(dialog.interactionTarget.activePerson)
-
+            //dialog.visualPanel.showPersonInfo(dialog.interactionTarget.activePerson)
         }
             6 -> {
 
@@ -225,10 +224,10 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
 
             }
             10 -> {
-
+                //Global.getSector().addTransientScript(nexusMidnightScript(dialog!!, coreguy!!))
             }
             11 -> {
-
+                dialog!!.interactionTarget.activePerson = coreguy
             }
             12 -> {
                 showRecountInfo(dialog!!)
