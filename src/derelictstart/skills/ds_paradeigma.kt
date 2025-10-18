@@ -23,7 +23,7 @@ class ds_paradeigma: BaseSkillEffectDescription(), ShipSkillEffect {
       val para1 =  info!!.addPara("A neural link taps into the Explorarium mass mind.", 0f)
         para1.setHighlight("Explorarium")
         para1.setHighlightColor(remmy.brightUIColor)
-      val para2 =  info.addPara("While you are in good relations with the Remnants, confers the following effects:", 0f)
+      val para2 =  info.addPara("While you are in good relations with the Explorarium, confers the following effects:", 0f)
         para2.setHighlight("good", "Explorarium")
         para2.setHighlightColors(Misc.getHighlightColor(), remmy.brightUIColor)
         info.addPara("Allows the recovery and piloting of automated ships.", 10f).setHighlight("recovery", "piloting")
