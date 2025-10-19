@@ -1,3 +1,6 @@
+v0.5 (2025/10/19)
+- Fix interaction not firing with AOTD - Question of Loyalty activated
+
 v0.4 (2025/10/18)
 - Add function to feed ships to Mothership as recipes
 

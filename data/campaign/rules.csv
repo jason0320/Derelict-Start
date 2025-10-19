@@ -1,7 +1,8 @@
 id,trigger,conditions,script,text,options,notes,,,,,,,,
 # nexus custom start interactions,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
-ds_nexusOpen,OpenInteractionDialog,"$faction.id == derelict
+ds_nexusOpen,DialogOptionSelected,"$option == salExplore
+$faction.id == derelict
 $customType == derelict_mothership
 $global.ds_nexusStart score:10000
 $player.commissionFactionId == derelict","ds_nexusStartRulecmd 0
@@ -18,7 +19,7 @@ ds_nexusStartRulecmd 3",,,,,,,,,,,,,,,
 ds_nexusDialog4,DialogOptionSelected,$option == ds_nexusRepair,ds_nexusStartRulecmd 4,Your $shipOrFleet has been fully repaired at no cost.,,,,,,,,,,,,,,
 ds_nexusDeconstruct1,DialogOptionSelected,$option == ds_nexusDeconstructMain,"ds_nexusStartRulecmd 13
 AddTextSmall ""You may deconstruct automated hulls here, as long as they normally require the Automated Ships skill to recover.""
-AddTextSmall ""Doing so will destroy the ship, but will allow the Remnants to use the hull.""
+AddTextSmall ""Doing so will destroy the ship, but will allow the Explorarium to use the hull.""
 AddTextSmall ""Access to the faction's weapons, fighters and AI cores (if applicable) will be gained at 50/75/90% collection progress respectively."" highlight",,"0:ds_nexusDeconstruct:Deconstruct automated hulls
 30:ds_nexusRecap:View collection progress
 50:ds_nexusBack:Return
@@ -27,7 +28,8 @@ ds_nexusDeconstruct2,DialogOptionSelected,$option == ds_nexusDeconstruct,ds_nexu
 ds_nexusDeconstruct3,DialogOptionSelected,$option == ds_nexusRecap,ds_nexusStartRulecmd 12,,,,,,,,,,,,,,,
 ds_nexusDialog6,DialogOptionSelected,$option == ds_nexusDeconstructProceed,ds_nexusStartRulecmd 9,,,,,,,,,,,,,,,
 ds_nexusDialog7,DialogOptionSelected,$option == ds_nexusBack,ds_nexusStartRulecmd 5,,,,,,,,,,,,,,,
-ds_nexusDialog8,BeginFleetEncounter,"$faction.id == remnant score:10000
+ds_nexusDialog8,DialogOptionSelected,"$option == salExplore
+$faction.id == derelict score:10000
 $customType == derelict_mothership
 $global.ds_nexusStart",ds_nexusStartRulecmd 5,,,# TODO: FINISH ADDING DERELICT RAID QUEST,,,,,,,,,,,,
 ds_nexusStorage1,MarketPostOpen,$id == ds_nexusStorage score:10000,"$tradeMode = OPEN 0
