@@ -3,6 +3,7 @@ package data.derelictstart.scripts.rulecmd
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.Script
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.BattleAPI.BattleSide
 import com.fs.starfarer.api.campaign.econ.MarketAPI
@@ -15,6 +16,8 @@ import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.FleetEncounterContext
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl
 import com.fs.starfarer.api.impl.campaign.ids.*
+import com.fs.starfarer.api.impl.campaign.procgen.themes.*
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.EntityLocation
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin
 import com.fs.starfarer.api.ui.Alignment
@@ -22,10 +25,11 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
-import com.fs.starfarer.campaign.CustomCampaignEntity
-import com.fs.starfarer.combat.entities.CustomCombatEntity
 import data.derelictstart.customStart.ds_nexusCustomProduction
 import data.derelictstart.customStart.ds_nexusRaidIntel
+import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.METALS_PER_NEXUS
+import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.RARE_METALS_PER_NEXUS
+import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.SUPPLIES_PER_NEXUS
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.factionspec
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.rewardlist
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.ship
@@ -33,8 +37,6 @@ import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.targetm
 import lunalib.lunaExtensions.getCustomEntitiesWithType
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
-import org.magiclib.kotlin.getNearbyFleets
-import org.magiclib.kotlin.getStationFleet
 import org.magiclib.util.MagicCampaign
 import java.awt.Color
 import kotlin.math.roundToInt
@@ -120,11 +122,13 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
             dialog.optionPanel.setTooltip("ds_nexusRepair", "A free automated repair procedure. Restores all ships to full CR and hull integrity at no cost.")
             dialog.optionPanel.addOption("Manage automated hulls", "ds_nexusDeconstructMain")
             dialog.optionPanel.setTooltip("ds_nexusDeconstruct", "Destroy an automated hull to add it to the Explorarium' known hulls.")
+            dialog.optionPanel.addOption("Consider building a new Mothership", "ds_nexusConstructMenu")
+            dialog.optionPanel.setTooltip("ds_nexusConstructMenu", "Construct a new Mothership")
            // if (!Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) && !Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusPartyTimeout")){
           //      dialog.optionPanel.addOption("Raid requests", "ds_nexusPartyTimeShow")
           //  } just fix it later.
             dialog.optionPanel.addOption("Leave", "defaultLeave")
-            //dialog.optionPanel.setShortcut("ds_nexusRepair", Keyboard.KEY_A, false, false,false , false)
+            dialog.optionPanel.setShortcut("ds_nexusRepair", Keyboard.KEY_A, false, false,false , false)
             //dialog.visualPanel.showPersonInfo(dialog.interactionTarget.activePerson)
         }
             6 -> {
@@ -247,24 +251,43 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
 
 
             }
-            14 -> {
-                if (Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) || Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusPartyTimeout")){
-                    return false
-                } else {
-                    return true
+            14 -> { // call this to show all resource costs, then check resources and disable option to build nexus if either time is too early or
+                val expire = Global.getSector().memoryWithoutUpdate.getExpire("\$ds_nexusBuildTimeout")
+                if  (Global.getSector().memoryWithoutUpdate.getExpire("\$ds_nexusBuildTimeout") > 0f){
+                    dialog!!.textPanel.addPara("It will take some time to prepare to construct another Mothership.")
+                    dialog.textPanel.addPara("You may construct another in ${expire.roundToInt()} days.")
+                }
+                dialog!!.textPanel.addCostPanel("Construction Costs", Commodities.SUPPLIES, SUPPLIES_PER_NEXUS.roundToInt(), true, Commodities.METALS, METALS_PER_NEXUS.roundToInt(), true, Commodities.RARE_METALS, RARE_METALS_PER_NEXUS.roundToInt(), true)
+                // dialog.textPanel.co
+                var supplies = false
+                var metals = false
+                var raremetals = false
+                val pcargo = Global.getSector().playerFleet.cargo
+                if (pcargo.getCommodityQuantity(Commodities.SUPPLIES) >= SUPPLIES_PER_NEXUS) supplies = true
+                if (pcargo.getCommodityQuantity(Commodities.METALS) >= METALS_PER_NEXUS) metals = true
+                if (pcargo.getCommodityQuantity(Commodities.RARE_METALS) >= RARE_METALS_PER_NEXUS) raremetals = true
+
+                if (Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusBuildTimeout") || !supplies || !metals || !raremetals){
+                    dialog.optionPanel.setEnabled("ds_nexusConstruct", false)
+                    dialog.optionPanel.setTooltip("ds_nexusConstruct", "Can't build this yet.")
                 }
             }
-            15 ->{
-                getShowRaidTarget(dialog!!, targetmarket, rewardlist)
-            }
-            16 -> {
-                doSetup(dialog!!)
+            15 -> {
+                ShowNexusBuildPicker(dialog!!)
+
+
             }
 
         }
         return true
     }
     companion object {
+        val SUPPLIES_PER_NEXUS = 800f
+        val METALS_PER_NEXUS = 1500f
+        val RARE_METALS_PER_NEXUS = 200f
+        val WEAPONS_THRESHOLD = 0.40f
+        val FIGHTERS_THRESHOLD = 0.50f
+        val AICORES_THRESHOLD = 0.75f
         var targetmarket: MarketAPI? = null
         var rewardlist = ArrayList<Int>()
         var coreguy: PersonAPI? = null
@@ -275,6 +298,146 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
     }
 }
 
+class ds_nexusBuildScript(var source: CampaignFleetAPI, var loc: EntityLocation) : Script {
+    override fun run() {
+        val system = source.starSystem ?: return // if we aren't in a star system somehow when this runs, something really fucked up.
+        val random = Misc.random
+        Global.getSector().campaignUI.messageDisplay.addMessage("Mothership construction finished in ${system.name}")
+
+//        val fleet = FleetFactoryV3.createEmptyFleet(Factions.DERELICT, FleetTypes.BATTLESTATION, null)
+//
+//        val member: FleetMemberAPI = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "station_derelict_survey_mothership_Standard")
+//        fleet.fleetData.addFleetMember(member)
+//
+//
+//        //fleet.getMemoryWithoutUpdate().set(MemFlags.MEMORY_KEY_PIRATE, true);
+//        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE] = true
+//        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_NO_JUMP] = true
+//        fleet.memoryWithoutUpdate[MemFlags.MEMORY_KEY_MAKE_ALLOW_DISENGAGE] = true
+//        fleet.addTag(Tags.NEUTRINO_HIGH)
+//
+//        fleet.isStationMode = true
+//
+//        //RemnantThemeGenerator.addRemnantStationInteractionConfig(fleet)
+//
+//        system.addEntity(fleet)
+//
+//
+//        //fleet.setTransponderOn(true);
+//        fleet.clearAbilities()
+//        fleet.addAbility(Abilities.TRANSPONDER)
+//        fleet.getAbility(Abilities.TRANSPONDER).activate()
+//        fleet.detectedRangeMod.modifyFlat("gen", 1000f)
+//
+//        fleet.ai = null
+//
+//        BaseThemeGenerator.setEntityLocation(fleet, loc, null)
+//        BaseThemeGenerator.convertOrbitWithSpin(fleet, 5f)
+//
+//        val coreId = Commodities.ALPHA_CORE
+//
+//        val plugin = Misc.getAICoreOfficerPlugin(coreId)
+//        val commander = plugin.createPerson(coreId, fleet.faction.id, random)
+//
+//        fleet.commander = commander
+//        fleet.flagship.captain = commander
+//
+//
+////        RemnantOfficerGeneratorPlugin.integrateAndAdaptCoreForAIFleet(fleet.flagship)
+////        RemnantOfficerGeneratorPlugin.addCommanderSkills(commander, fleet, null, 3, random)
+//
+//        member.repairTracker.cr = member.repairTracker.maxCR
+//        fleet.cargo.addAll(addNexusCargo(fleet))
+//        val maxFleets = 8 + random.nextInt(5)
+//        val activeFleets = RemnantStationFleetManager(
+//            fleet, 1f, 0, maxFleets, 15f, 8, 24
+//        )
+//        system.addScript(activeFleets)
+        val stable = source.getContainingLocation().addCustomEntity(null, null, "derelict_mothership", "derelict");
+        val orbitRadius = com.fs.starfarer.api.util.Misc.getDistance(source, system.getCenter());
+        val orbitDays = orbitRadius / (20f + random.nextFloat() * 5f);
+        val angle = com.fs.starfarer.api.util.Misc.getAngleInDegrees(system.getCenter().getLocation(), source.getLocation());
+        stable.setCircularOrbit(system.getCenter(), angle, orbitRadius, orbitDays);
+        system.addTag(Tags.THEME_DERELICT_MOTHERSHIP) // necessary for other remnant-related stuff to work properly
+//        source.addAssignment(FleetAssignment.GO_TO_LOCATION_AND_DESPAWN, fleet, 999f)
+    }
+}
+
+private fun ShowNexusBuildPicker(dialog: InteractionDialogAPI){
+    //val nexusList = MiscellaneousThemeGenerator.getRemnantStations(true, false)
+    val nexusList = Global.getSector().getCustomEntitiesWithType("derelict_mothership")
+    val bannedSystemsList = ArrayList<StarSystemAPI>()
+    nexusList.forEach { if (it.starSystem != null)  bannedSystemsList.add(it.starSystem) }
+    val validSystemList = Global.getSector().starSystems.filter { it.isEnteredByPlayer && it.isProcgen && !it.isDeepSpace && !it.hasTag(Tags.THEME_HIDDEN) && !bannedSystemsList.contains(it) }
+    val centers = ArrayList<SectorEntityToken>()
+    validSystemList.forEach { centers.add(it.center) }
+    dialog.showCampaignEntityPicker("Title", "Selected", "Ok", Global.getSector().getFaction(Factions.DERELICT), centers, object : BaseCampaignEntityPickerListener(){
+        override fun cancelledEntityPicking() {
+            dialog.textPanel.addPara("cancelled")
+        }
+
+
+
+        override fun getFuelRangeMult(): Float {
+            return 0f
+        }
+
+        override fun pickedEntity(entity: SectorEntityToken) {
+            // upon pick, set memory and boot us back to the main dialog + spawn a fleet with assignment script to go to location
+            // will orbit a token created in the system for x days if possible, upon order completion run a script that creates the fleet (check theme gen for hwo
+            val cargo = Global.getSector().playerFleet.cargo
+            cargo.removeCommodity(Commodities.SUPPLIES, SUPPLIES_PER_NEXUS)
+            cargo.removeCommodity(Commodities.METALS, METALS_PER_NEXUS)
+            cargo.removeCommodity(Commodities.RARE_METALS, RARE_METALS_PER_NEXUS)
+            AddRemoveCommodity.addCommodityLossText(Commodities.SUPPLIES, SUPPLIES_PER_NEXUS.roundToInt(), dialog.textPanel)
+            AddRemoveCommodity.addCommodityLossText(Commodities.METALS, METALS_PER_NEXUS.roundToInt(), dialog.textPanel)
+            AddRemoveCommodity.addCommodityLossText(Commodities.RARE_METALS, RARE_METALS_PER_NEXUS.roundToInt(), dialog.textPanel)
+
+            val system = entity!!.starSystem
+            val loc = BaseThemeGenerator.pickCommonLocation(Misc.random, system, 200f, true, null)
+            val token = system.createToken(MathUtils.getRandomPointOnCircumference(entity.location, 6000f))
+            Global.getSector().memoryWithoutUpdate.set("\$ds_nexusBuildTimeout", true, 90f)
+            dialog.optionPanel.setEnabled("ds_nexusConstruct", false)
+            val constructorFleet = MagicCampaign.createFleetBuilder()
+                .setFleetFaction(Factions.DERELICT)
+                .setFleetName("Construction Fleet")
+                .setFleetType(FleetTypes.SUPPLY_FLEET)
+                .setAssignment(FleetAssignment.GO_TO_LOCATION)
+                .setAssignmentTarget(token)
+                .setSpawnLocation(dialog.interactionTarget)
+                .setIsImportant(true)
+                .setMinFP(200)
+                .create()
+
+            constructorFleet.removeFirstAssignment()
+            constructorFleet.addAssignment(FleetAssignment.GO_TO_LOCATION, token, 999f)
+
+            constructorFleet.addAssignment(FleetAssignment.ORBIT_PASSIVE, token, 30f, "Constructing Mothership", ds_nexusBuildScript(constructorFleet, loc))
+            dialog.textPanel.addPara("A fleet has been dispatched to ${system.name}.").setHighlight(system.name)
+            dialog.textPanel.addPara("Once it arrives, it will take 30 days to construct the Mothership.").setHighlight("30 days")
+        }
+
+        override fun canConfirmSelection(entity: SectorEntityToken?): Boolean {
+            return (entity != null)
+        }
+
+        override fun createInfoText(info: TooltipMakerAPI?, entity: SectorEntityToken?) {
+            if (entity == null) return
+            info!!.addPara("Selected system: ${entity.starSystem?.name}", 5f)
+            if (entity.starSystem?.constellation != null) {
+                val const = entity.constellation.name
+                info.addPara(const, 5f)
+            }
+            val ly = Misc.getDistanceToPlayerLY(entity)
+            info.addPara("$ly light years away from your location.", 5f).setHighlight("$ly")
+        }
+
+        override fun getMenuItemNameOverrideFor(entity: SectorEntityToken?): String {
+            return entity?.starSystem?.name ?: return "Location"
+        }
+    } )
+
+}
 
 private fun getCargoPicker(dialog: InteractionDialogAPI?){
     val memory = Global.getSector().playerMemoryWithoutUpdate

@@ -1,3 +1,6 @@
+v0.6 (2025/10/20)
+- Add function to construct Mothership
+
 v0.5 (2025/10/19)
 - Fix interaction not firing with AOTD - Question of Loyalty activated
 
