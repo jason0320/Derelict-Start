@@ -10,6 +10,7 @@ import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3
 import com.fs.starfarer.api.impl.campaign.ids.*
 import com.fs.starfarer.api.impl.campaign.intel.FactionCommissionIntel
+import com.fs.starfarer.api.impl.campaign.rulecmd.FireBest
 import com.fs.starfarer.api.impl.campaign.rulecmd.NGCAddStandardStartingScript
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
@@ -133,7 +134,7 @@ class ds_remnantCustomStart: CustomStart() {
 
         dialog.optionPanel.addOption(StringHelper.getString("done", true), "nex_NGCDone")
         dialog.optionPanel.addOption(StringHelper.getString("back", true), "nex_NGCStartBack")
-
+        FireBest.fire(null, dialog, memoryMap, "NewGameBackgroundSelection");
 
     }
 

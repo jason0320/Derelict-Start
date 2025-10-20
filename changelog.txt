@@ -1,3 +1,6 @@
+v0.7 (2025/10/20)
+- Add function to select Nexerelin background with Derelict Start
+
 v0.6 (2025/10/20)
 - Add function to construct Mothership
 
