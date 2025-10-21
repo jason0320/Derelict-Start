@@ -12,6 +12,8 @@ ShowImageVisual orbital","The Explorarium Mothership welcomes you into its grace
 50:ds_nexusRepair:Initiate fleet repairs
 70:ds_nexusDeconstructMain:Manage automated hulls
 90:ds_nexusConstructMenu:Consider building a new Mothership
+95:ds_nexusPartyTimeShow:Raid requests
+96:ds_nexusPartyTimeReward:Raid rewards
 100:defaultLeave:Leave",,,,,,,,,,,,,
 ds_nexusDialog1,DialogOptionSelected,$option == ds_nexusCargoPicker,ds_nexusStartRulecmd 1,,,,,,,,,,,,,,,
 ds_nexusDialog2,DialogOptionSelected,$option == ds_nexusProductionPicker,ds_nexusStartRulecmd 2,,,,,,,,,,,,,,,
@@ -61,15 +63,16 @@ ds_nexusDefenderSkip2,DialogOptionSelected,$option == ds_yeetRemmies,ds_getRemna
 ds_nexusDefenderSkip3,DialogOptionSelected,$option == ds_noyeetRemmies,SalvageDefenderInteraction,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 # raid option,,,,,,,,,,,,,,,,,,
-ds_nexusPartyTimeShow,DialogOptionSelected,$option == ds_nexusPartyTimeShow,ds_nexusStartRulecmd 15,,"0:ds_nexusPartyTimeInit:Accept the request
+ds_nexusPartyTimeShow,DialogOptionSelected,$option == ds_nexusPartyTimeShow,ds_nexusStartRulecmd 16,,"0:ds_nexusPartyTimeInit:Accept the request
 30:ds_nexusBack:Go back",,,,,,,,,,,,,
-ds_nexusPartyTimeInit,DialogOptionSelected,$option == ds_nexusPartyTimeInit,ds_nexusStartRulecmd 16,,0:ds_nexusBack:Continue,,,,,,,,,,,,,
+ds_nexusPartyTimeInit,DialogOptionSelected,$option == ds_nexusPartyTimeInit,ds_nexusStartRulecmd 17,,0:ds_nexusBack:Continue,,,,,,,,,,,,,
+ds_nexusPartyTimeReward,DialogOptionSelected,$option == ds_nexusPartyTimeReward,ds_nexusStartRulecmd 18,,0:ds_nexusBack:Continue,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 # bla,,,,,,
 ds_nex_marketPostOpenDerelicts,MarketPostOpen,"$hasMarket
 $global.ds_nexusStart score:10000
 $faction.id == nex_derelict score:10000","$tradeMode = OPEN 0
-FireBest MarketPostDock","$TheFactionLong $factionIsOrAre in control of this location. They may interact since you are with Explorarium.",,
+FireBest MarketPostDock","$TheFactionLong $factionIsOrAre in control of this location. You may interact since you are with Explorarium.",,
 ds_nex_marketOptionCommDirDerelicts,PopulateOptions,"$hasMarket
 $menuState == main
 $global.ds_nexusStart score:10000

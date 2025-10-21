@@ -16,6 +16,9 @@ import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.rewardlist
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.targetmarket
+import org.lazywizard.lazylib.MathUtils
+
+
 
 class ds_nexusRaidIntel (var bombmarket: MarketAPI, var reward: ArrayList<Int>): BaseIntelPlugin(), ColonyPlayerHostileActListener {
     val pcargo = Global.getSector().playerFleet.cargo
@@ -114,4 +117,10 @@ class ds_nexusRaidIntel (var bombmarket: MarketAPI, var reward: ArrayList<Int>):
 
         memory.unset(key)
     }
+
+    fun getRewardList(): ArrayList<Int> {
+        return reward
+    }
+
+
 }
