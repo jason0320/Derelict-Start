@@ -134,7 +134,7 @@ class ds_remnantCustomStart: CustomStart() {
 
         dialog.optionPanel.addOption(StringHelper.getString("done", true), "nex_NGCDone")
         dialog.optionPanel.addOption(StringHelper.getString("back", true), "nex_NGCStartBack")
-        FireBest.fire(null, dialog, memoryMap, "NewGameBackgroundSelection");
+        FireBest.fire(null, dialog, memoryMap, "ExerelinNGCStep4")
 
     }
 
@@ -168,5 +168,6 @@ class ds_remnantCustomStart: CustomStart() {
 
 
     return cargo
+
 
 }
