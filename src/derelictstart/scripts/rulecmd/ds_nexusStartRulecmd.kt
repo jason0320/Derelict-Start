@@ -365,7 +365,7 @@ class ds_nexusBuildScript(var source: CampaignFleetAPI, var loc: EntityLocation)
 
 private fun ShowNexusBuildPicker(dialog: InteractionDialogAPI){
     //val nexusList = MiscellaneousThemeGenerator.getRemnantStations(true, false)
-    val nexusList = Global.getSector().getCustomEntitiesWithType("derelict_mothership")
+    val nexusList = Global.getSector().getCustomEntitiesWithType(Entities.DERELICT_MOTHERSHIP)
     val bannedSystemsList = ArrayList<StarSystemAPI>()
     nexusList.forEach { if (it.starSystem != null)  bannedSystemsList.add(it.starSystem) }
     val validSystemList = Global.getSector().starSystems.filter { it.isEnteredByPlayer && it.isProcgen && !it.isDeepSpace && !it.hasTag(Tags.THEME_HIDDEN) && !bannedSystemsList.contains(it) }
@@ -706,7 +706,7 @@ class nexusStorageScript(
         dialog.textPanel.addPara("These are available through the supply cargo picker.")
         dialog.textPanel.setFontSmallInsignia()
         mem.set("\$ds_" + spec + "cores", true)
-        val nexii = Global.getSector().getCustomEntitiesWithType("derelict_mothership")
+        val nexii = Global.getSector().getCustomEntitiesWithType(Entities.DERELICT_MOTHERSHIP)
         when (spec){
             "rat_abyssals_deep" -> {
                 nexii.forEach {

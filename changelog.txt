@@ -1,3 +1,12 @@
+v0.10 (2025/10/21)
+- Fix not starting at the right entity if there are duplicated location id
+
+v0.9 (2025/10/21)
+- Fix interaction with Wide Horizon Dark Pulsar Domain Mothership
+
+v0.8 (2025/10/21)
+- Add function to select experience and assets at start
+
 v0.7 (2025/10/20)
 - Add function to select Nexerelin background with Derelict Start
 

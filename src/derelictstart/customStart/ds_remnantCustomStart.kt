@@ -115,7 +115,13 @@ class ds_remnantCustomStart: CustomStart() {
 
         }
         data.addScriptBeforeTimePass {
-            val nexii = Global.getSector().getCustomEntitiesWithType("derelict_mothership")
+            val nexii = Global.getSector().getCustomEntitiesWithType(Entities.DERELICT_MOTHERSHIP)
+            nexii.forEach {
+                if (it.id!="derelict_mothership")
+                {
+                    nexii.minus(it)
+                }
+            }
             nexii.forEach {
                 it.cargo.addAll(addNexusCargo(it))
             }
@@ -168,6 +174,5 @@ class ds_remnantCustomStart: CustomStart() {
 
 
     return cargo
-
 
 }

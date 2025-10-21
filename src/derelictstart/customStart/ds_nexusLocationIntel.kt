@@ -5,6 +5,7 @@ import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.SectorAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
+import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator
@@ -24,7 +25,7 @@ class ds_nexusLocationIntel: BaseIntelPlugin() {
         info.addPara("You are privy to the location of any Explorarium Mothership in the sector, owing to your background.", 5f)
         info.addPara("The following systems contain a Explorarium Mothership;", 10f)
 
-        val nexii = Global.getSector().getCustomEntitiesWithType("derelict_mothership")
+        val nexii = Global.getSector().getCustomEntitiesWithType(Entities.DERELICT_MOTHERSHIP)
         nexii.forEach {
             if (it.starSystem.isInConstellation) {
                 if (it.starSystem.constellation.name.startsWith("The")){
