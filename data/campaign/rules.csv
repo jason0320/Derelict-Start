@@ -65,6 +65,16 @@ ds_nexusPartyTimeShow,DialogOptionSelected,$option == ds_nexusPartyTimeShow,ds_n
 30:ds_nexusBack:Go back",,,,,,,,,,,,,
 ds_nexusPartyTimeInit,DialogOptionSelected,$option == ds_nexusPartyTimeInit,ds_nexusStartRulecmd 16,,0:ds_nexusBack:Continue,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
+# bla,,,,,,
+ds_nex_marketPostOpenDerelicts,MarketPostOpen,"$hasMarket
+$global.ds_nexusStart score:10000
+$faction.id == nex_derelict score:10000","$tradeMode = OPEN 0
+FireBest MarketPostDock","$TheFactionLong $factionIsOrAre in control of this location. They may interact since you are with Explorarium.",,
+ds_nex_marketOptionCommDirDerelicts,PopulateOptions,"$hasMarket
+$menuState == main
+$global.ds_nexusStart score:10000
+$faction.id == nex_derelict score:1000",SetEnabled marketCommDir true,,,
+,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,

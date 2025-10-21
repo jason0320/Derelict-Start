@@ -1,7 +1,11 @@
 package data.derelictstart.customStart
 
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.*
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.CargoAPI
+import com.fs.starfarer.api.campaign.FactionAPI
+import com.fs.starfarer.api.campaign.InteractionDialogAPI
+import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.rules.MemKeys
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.characters.CharacterCreationData
@@ -19,9 +23,8 @@ import exerelin.campaign.PlayerFactionStore
 import exerelin.campaign.customstart.CustomStart
 import exerelin.utilities.StringHelper
 import lunalib.lunaExtensions.getCustomEntitiesWithType
+import lunalib.lunaExtensions.getSystemsWithTag
 import org.lazywizard.lazylib.MathUtils
-import org.magiclib.kotlin.getNearbyFleets
-import org.magiclib.kotlin.getStationFleet
 import second_in_command.SCUtils
 import kotlin.math.roundToInt
 
@@ -97,7 +100,8 @@ class ds_remnantCustomStart: CustomStart() {
                 cargo.addCommodity(Commodities.HEAVY_MACHINERY, member.cargoCapacity*0.1f)
             }
             fleet.fleetData.setSyncNeeded()
-            val stationsystem = Global.getSector().getStarSystem("corvus")
+            //val stationsystem = Global.getSector().getStarSystem("corvus")
+            val stationsystem = Global.getSector().getSystemsWithTag(Tags.THEME_DERELICT_MOTHERSHIP).get(0)
             val station: SectorEntityToken = stationsystem.addCustomEntity("ds_nexusStorage", "Mothership Global Storage", "station_side05", Factions.NEUTRAL)
            // val market: MarketAPI = Global.getFactory().createMarket("ds_nexusStorage", "Nexus Global Storage", 0)
             Misc.setAbandonedStationMarket("ds_nexusStorage", station)
@@ -132,7 +136,6 @@ class ds_remnantCustomStart: CustomStart() {
             Global.getSector().intelManager.addIntel(ds_nexusLocationIntel(), false)
             FactionCommissionIntel(Global.getSector().getFaction(Factions.DERELICT)).missionAccepted()
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", startloc.id)
-
         }
 
 

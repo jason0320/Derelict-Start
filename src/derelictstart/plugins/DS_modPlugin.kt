@@ -2,6 +2,7 @@ package data.derelictstart.plugins
 
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipHullSpecAPI
@@ -41,6 +42,17 @@ class DS_modPlugin: BaseModPlugin() {
                         }
                 }
             }
+
+            val derelictFaction: FactionAPI? = Global.getSector().getFaction("derelict")
+            val nexderelictFaction: FactionAPI? = Global.getSector().getFaction("nex_derelict")
+            if (derelictFaction != null && nexderelictFaction != null) {
+                val playerFaction: FactionAPI = Global.getSector().playerFaction
+                playerFaction.setRelationship(nexderelictFaction.id, 100f)
+                nexderelictFaction.setRelationship(playerFaction.id, 100f)
+                derelictFaction.setRelationship(nexderelictFaction.id, 100f)
+                nexderelictFaction.setRelationship(derelictFaction.id, 100f)
+            }
         }
     }
+
 }

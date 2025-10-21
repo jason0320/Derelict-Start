@@ -1,3 +1,7 @@
+v0.11 (2025/10/21)
+- Make Derelict Empire scenario Derelict faction friendly and interactable
+- Fix Random Sector crash
+
 v0.10 (2025/10/21)
 - Fix not starting at the right entity if there are duplicated location id
 
