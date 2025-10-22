@@ -4,7 +4,7 @@
 			"id":"ds_remnantStart",
 			"name":"Adrift",
 			"difficulty":"Normal",
-			"desc":"You are forever hated by most factions, but can use any Domain Mothership for restocking and other new fleet-related services.",
+			"desc":"Abandon humanity and take your chances. Start with the Automated Ships skill and the ability to pilot automated ships, as well as use any Domain Mothership as a market for restocking and other new fleet-related services.",
 			"className":"data.derelictstart.customStart.ds_remnantCustomStart",
 		},
 	],

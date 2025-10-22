@@ -145,6 +145,7 @@ class ds_remnantCustomStart: CustomStart() {
         dialog.optionPanel.addOption(StringHelper.getString("back", true), "nex_NGCStartBack")
         FireBest.fire(null, dialog, memoryMap, "ExerelinNGCStep4")
 
+
     }
 
 

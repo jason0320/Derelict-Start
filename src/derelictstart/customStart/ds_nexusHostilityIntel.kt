@@ -32,12 +32,12 @@ class ds_nexusHostilityIntel: BaseIntelPlugin(), EconomyTickListener {
     val title = "Hostile Operations"
     val sprite = Global.getSettings().getSpriteName("intel", "hostile_activity")
     init {
-        factionlist.add("hegemony")
-        factionlist.add("luddic_church")
-        factionlist.add("independent")
-        factionlist.add("persean_league")
-        factionlist.add("luddic_path")
-
+        for (faction in Global.getSector().getAllFactions()) {
+            val factionId = faction.getId()
+            if (factionId != Factions.DERELICT && factionId != "nex_derelict" && factionId != Factions.REMNANTS && factionId != Factions.OMEGA && factionId != Factions.TRITACHYON){
+                factionlist.add(factionId)
+            }
+        }
     }
     // the gist...
     // use reporteconomytick, check if player is near or in core worlds (check hyperspace loc if in hyper, otherwise check system dist to center)

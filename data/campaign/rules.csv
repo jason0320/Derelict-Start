@@ -13,7 +13,6 @@ ShowImageVisual orbital","The Explorarium Mothership welcomes you into its grace
 70:ds_nexusDeconstructMain:Manage automated hulls
 90:ds_nexusConstructMenu:Consider building a new Mothership
 95:ds_nexusPartyTimeShow:Raid requests
-96:ds_nexusPartyTimeReward:Raid rewards
 100:defaultLeave:Leave",,,,,,,,,,,,,
 ds_nexusDialog1,DialogOptionSelected,$option == ds_nexusCargoPicker,ds_nexusStartRulecmd 1,,,,,,,,,,,,,,,
 ds_nexusDialog2,DialogOptionSelected,$option == ds_nexusProductionPicker,ds_nexusStartRulecmd 2,,,,,,,,,,,,,,,

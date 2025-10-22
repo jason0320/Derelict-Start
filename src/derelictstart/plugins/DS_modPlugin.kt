@@ -4,14 +4,12 @@ import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
+import com.fs.starfarer.api.campaign.SectorAPI
 import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.ShipHullSpecAPI
-import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
-import com.fs.starfarer.api.impl.campaign.ids.Abilities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.loading.Description
-import data.derelictstart.scripts.*
+import exerelin.campaign.DiplomacyManager
+
+
 
 class DS_modPlugin: BaseModPlugin() {
 
@@ -52,6 +50,19 @@ class DS_modPlugin: BaseModPlugin() {
                 derelictFaction.setRelationship(nexderelictFaction.id, 100f)
                 nexderelictFaction.setRelationship(derelictFaction.id, 100f)
             }
+        }
+    }
+
+    override fun onNewGameAfterEconomyLoad() {
+        val player = Global.getSector().getFaction(Factions.PLAYER)
+        for (faction in Global.getSector().getAllFactions()) {
+            val factionId = faction.getId()
+            if (factionId == Factions.DERELICT) continue
+            if (factionId == "nex_derelict") continue
+            if (factionId == Factions.REMNANTS) continue
+            if (factionId == Factions.OMEGA) continue
+            if (factionId == Factions.TRITACHYON) continue
+            player.setRelationship(factionId, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
         }
     }
 
