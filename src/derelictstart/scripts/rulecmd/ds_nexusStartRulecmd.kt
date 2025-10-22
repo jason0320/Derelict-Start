@@ -870,21 +870,28 @@ fun getShowRaidTarget( dialog: InteractionDialogAPI,  target: MarketAPI?,  rewar
 }
 
 fun doSetup(dialog: InteractionDialogAPI){
-    Global.getSector().intelManager.addIntel(ds_nexusRaidIntel(targetmarket!!, rewardlist), false, dialog.textPanel)
-    Global.getSector().listenerManager.addListener(ds_nexusRaidIntel(targetmarket!!, rewardlist))
-    val targfaction = targetmarket!!.factionId
-    for (i in 0 until 2) {
-        val remmy = MagicCampaign.createFleetBuilder().setFleetName("Chauffeurs").setFleetFaction(Factions.DERELICT).setAssignmentTarget(Global.getSector().playerFleet).setAssignment(FleetAssignment.ORBIT_PASSIVE).setMinFP(Global.getSector().playerFleet.fleetPoints / 2).setIsImportant(true).setSpawnLocation(Global.getSector().playerFleet.interactionTarget).setTransponderOn(false).setQualityOverride(2f).create()
-        remmy.memoryWithoutUpdate.apply {
-            set(MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER, true)
-            set(MemFlags.MEMORY_KEY_ALLOW_PLAYER_BATTLE_JOIN_TOFF, true)
-            set(MemFlags.DO_NOT_TRY_TO_AVOID_NEARBY_FLEETS, true)
-            set(MemFlags.MEMORY_KEY_FLEET_DO_NOT_GET_SIDETRACKED, true)
-            set(MemFlags.MEMORY_KEY_FORCE_TRANSPONDER_OFF, true)
+
+    if (!Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java)) {
+        Global.getSector().intelManager.addIntel(ds_nexusRaidIntel(targetmarket!!, rewardlist), false, dialog.textPanel)
+        Global.getSector().listenerManager.addListener(ds_nexusRaidIntel(targetmarket!!, rewardlist))
+        val targfaction = targetmarket!!.factionId
+        for (i in 0 until 2) {
+            val remmy = MagicCampaign.createFleetBuilder().setFleetName("Chauffeurs").setFleetFaction(Factions.DERELICT)
+                .setAssignmentTarget(Global.getSector().playerFleet).setAssignment(FleetAssignment.ORBIT_PASSIVE)
+                .setMinFP(Global.getSector().playerFleet.fleetPoints / 2).setIsImportant(true)
+                .setSpawnLocation(Global.getSector().playerFleet.interactionTarget).setTransponderOn(false)
+                .setQualityOverride(2f).create()
+            remmy.memoryWithoutUpdate.apply {
+                set(MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER, true)
+                set(MemFlags.MEMORY_KEY_ALLOW_PLAYER_BATTLE_JOIN_TOFF, true)
+                set(MemFlags.DO_NOT_TRY_TO_AVOID_NEARBY_FLEETS, true)
+                set(MemFlags.MEMORY_KEY_FLEET_DO_NOT_GET_SIDETRACKED, true)
+                set(MemFlags.MEMORY_KEY_FORCE_TRANSPONDER_OFF, true)
+            }
+            remmy.removeFirstAssignment()
+            remmy.addAssignment(FleetAssignment.ATTACK_LOCATION, targetmarket!!.primaryEntity, 30f)
+            //remmy.addScript(ds_chauffeurAI(remmy, targetmarket!!))
         }
-        remmy.removeFirstAssignment()
-        remmy.addAssignment(FleetAssignment.ATTACK_LOCATION, targetmarket!!.primaryEntity, 30f)
-        //remmy.addScript(ds_chauffeurAI(remmy, targetmarket!!))
     }
 }
 

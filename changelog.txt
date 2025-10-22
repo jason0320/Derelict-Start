@@ -1,3 +1,6 @@
+v0.14 (2025/10/22)
+- Raid dialog fix (temp)
+
 v0.13 (2025/10/22)
 - Allow satbomb mission to mod factions
 - Set most factions to hostile at start
