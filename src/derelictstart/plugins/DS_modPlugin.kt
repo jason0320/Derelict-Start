@@ -62,6 +62,11 @@ class DS_modPlugin: BaseModPlugin() {
             if (factionId == Factions.REMNANTS) continue
             if (factionId == Factions.OMEGA) continue
             if (factionId == Factions.TRITACHYON) continue
+            if (factionId == "sotf_dustkeepers") continue
+            if (factionId == "sotf_dustkeepers_proxies") continue
+            if (factionId == "sotf_sierra_faction") continue
+            if (factionId == "sotf_dreaminggestalt") continue
+
             player.setRelationship(factionId, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
         }
     }

@@ -34,9 +34,17 @@ class ds_nexusHostilityIntel: BaseIntelPlugin(), EconomyTickListener {
     init {
         for (faction in Global.getSector().getAllFactions()) {
             val factionId = faction.getId()
-            if (factionId != Factions.DERELICT && factionId != "nex_derelict" && factionId != Factions.REMNANTS && factionId != Factions.OMEGA && factionId != Factions.TRITACHYON){
-                factionlist.add(factionId)
-            }
+            if (factionId == Factions.DERELICT) continue
+            if (factionId == "nex_derelict") continue
+            if (factionId == Factions.REMNANTS) continue
+            if (factionId == Factions.OMEGA) continue
+            if (factionId == Factions.TRITACHYON) continue
+            if (factionId == "sotf_dustkeepers") continue
+            if (factionId == "sotf_dustkeepers_proxies") continue
+            if (factionId == "sotf_sierra_faction") continue
+            if (factionId == "sotf_dreaminggestalt") continue
+
+            factionlist.add(factionId)
         }
     }
     // the gist...
