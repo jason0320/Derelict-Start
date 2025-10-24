@@ -140,7 +140,7 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
             dialog.optionPanel.addOption("Initiate fleet repairs", "ds_nexusRepair")
             dialog.optionPanel.setTooltip("ds_nexusRepair", "A free automated repair procedure. Restores all ships to full CR and hull integrity at no cost.")
             dialog.optionPanel.addOption("Manage automated hulls", "ds_nexusDeconstructMain")
-            dialog.optionPanel.setTooltip("ds_nexusDeconstruct", "Destroy an automated hull to add it to the Explorarium' known hulls.")
+            dialog.optionPanel.setTooltip("ds_nexusDeconstruct", "Destroy an automated hull to add it to the Explorarium's known hulls.")
             dialog.optionPanel.addOption("Consider building a new Mothership", "ds_nexusConstructMenu")
             dialog.optionPanel.setTooltip("ds_nexusConstructMenu", "Construct a new Mothership")
             if (Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) && Global.getSector().memoryWithoutUpdate.getInt("\$ds_nexusParty")==1){
@@ -169,7 +169,7 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
               //  dialog.optionPanel.addOption("Access the control node", "marketOpenCoreUI")
              //   dialog.optionPanel.addOption("Log off", "defaultLeave")
               //  dialog.optionPanel.removeOption("marketRepair")
-                dialog.textPanel.addPara("You're currently accessing the Explorarium Mothership' global data storage network.")
+                dialog.textPanel.addPara("You're currently accessing the Explorarium Mothership's global data storage network.")
                 dialog.textPanel.addPara("Any items stored in here will be available to retrieve from any other Explorarium Mothership in the sector.")
                 dialog.textPanel.addPara("Exit the storage network to return to using the Explorarium Mothership.")
             }
@@ -614,7 +614,7 @@ fun getCost(cargo: CargoAPI): Float {
                         }
                         val para1 = dialog.textPanel.addPara(member!!.shipName + ", a " + member.hullSpec.hullNameWithDashClass + " is selected.").setHighlight(member.shipName)
                         showFactionInfo(factionspec, dialog)
-                        dialog.textPanel.addPara("Proceeding will destroy the ship and add it to the Explorarium' known ships.").setHighlight("destroy", "add")
+                        dialog.textPanel.addPara("Proceeding will destroy the ship and add it to the Explorarium's known ships.").setHighlight("destroy", "add")
                         dialog.textPanel.addPara("This action cannot be undone.").setColor(Color.RED)
                         dialog.textPanel.addPara("Would you like to proceed?")
                         dialog.visualPanel.showFleetMemberInfo(member)
@@ -941,14 +941,13 @@ fun getRaidReward(dialog: InteractionDialogAPI){
         dialog.textPanel.addPara("RECONSTRUCTING MESSAGE - // waiting ... //")
         dialog.textPanel.setFontInsignia()
         dialog.textPanel.addPara("Voluminous greetings, caretaker.")
-        dialog.textPanel.addPara("$numgamma chocolate mousse, $numbeta lemon zest, $numalpha blueberry gummies and $numcredits credits are given ")
+        dialog.textPanel.addPara("$numgamma chocolate mousse, $numbeta lemon zest, $numalpha blueberry gummies and $numcredits credits are given")
             .setHighlight(numgamma.toString(), numbeta.toString(), numalpha.toString(), numcredits.toString())
 
         dialog.textPanel.setFontSmallInsignia()
-        dialog.textPanel.addPara("$numgamma gamma core, $numbeta beta core, $numalpha alpha core and $numcredits credits. are rewarded")
+        dialog.textPanel.addPara("$numgamma gamma core, $numbeta beta core, $numalpha alpha core and $numcredits credits are rewarded")
             .setHighlight(numgamma.toString(), numbeta.toString(), numalpha.toString(), numcredits.toString())
         dialog.textPanel.setFontInsignia()
-
 
         val sector = Global.getSector()
         val listenerMgr = sector.listenerManager

@@ -1,3 +1,6 @@
+v1.2 (2025/10/24)
+- Spelling fixes
+
 v1.1 (2025/10/24)
 - Fix player faction hostile bug
 
