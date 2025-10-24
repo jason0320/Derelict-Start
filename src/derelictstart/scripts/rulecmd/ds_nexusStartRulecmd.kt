@@ -60,6 +60,14 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
                 dialog.textPanel.addPara("Each Mothership has its own cargo for offer, and are prepared to produce Explorarium hulls and weapons instantaneously - provided you have the credits to authorize the production, that is.")
                 dialog.textPanel.setFontInsignia()
 
+                dialog.optionPanel.removeOption("defaultLeave")
+                if (Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) && Global.getSector().memoryWithoutUpdate.getInt("\$ds_nexusParty")==1){
+                    dialog.optionPanel.addOption("Raid rewards", "ds_nexusPartyTimeReward")
+                }
+                else if (!Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) && !Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusPartyTimeout")){
+                    dialog.optionPanel.addOption("Raid requests", "ds_nexusPartyTimeShow")
+                }
+                dialog.optionPanel.addOption("Leave", "defaultLeave")
             }
 
             1 -> {

@@ -1,3 +1,6 @@
+v0.17 (2025/10/24)
+- Dialog fix
+
 v0.16 (2025/10/24)
 - Raid dialog fix
 

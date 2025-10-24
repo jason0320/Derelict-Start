@@ -6,7 +6,6 @@ ds_nexusOpen,DialogOptionSelected,"$option == salExplore
 $customType == derelict_mothership
 $global.ds_nexusStart score:10000
 $player.commissionFactionId == derelict","ds_nexusStartRulecmd 0
-ds_nexusStartRulecmd 5
 ShowImageVisual orbital","The Explorarium Mothership welcomes you into its graces, allowing you to make use of its services.","0:ds_nexusCargoPicker:Evaluate the Mothership' cargo
 10:ds_nexusProductionPicker:Request immediate production
 30:ds_nexusStorage:Access the storage network
