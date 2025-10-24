@@ -34,6 +34,7 @@ class ds_nexusHostilityIntel: BaseIntelPlugin(), EconomyTickListener {
     init {
         for (faction in Global.getSector().getAllFactions()) {
             val factionId = faction.getId()
+            if (factionId == Factions.PLAYER) continue
             if (factionId == Factions.DERELICT) continue
             if (factionId == "nex_derelict") continue
             if (factionId == Factions.REMNANTS) continue

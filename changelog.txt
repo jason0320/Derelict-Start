@@ -1,3 +1,6 @@
+v1.1 (2025/10/24)
+- Fix player faction hostile bug
+
 v1.0 (2025/10/24)
 - Show raid cooldown
 
