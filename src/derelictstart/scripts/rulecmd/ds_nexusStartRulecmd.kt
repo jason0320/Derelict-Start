@@ -64,6 +64,14 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
                 if (Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) && Global.getSector().memoryWithoutUpdate.getInt("\$ds_nexusParty")==1){
                     dialog.optionPanel.addOption("Raid rewards", "ds_nexusPartyTimeReward")
                 }
+                else if (Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusPartyTimeout")){
+                    dialog.optionPanel.addOption("Raid cooldown", "ds_nexusPartyCoolDown")
+                    dialog.optionPanel.setEnabled("ds_nexusPartyCoolDown", false)
+                    val expire = Global.getSector().memoryWithoutUpdate.getExpire("\$ds_nexusPartyTimeout")
+                    if  (expire > 0f){
+                        dialog.optionPanel.setTooltip("ds_nexusPartyCoolDown","You may throw another party in ${expire.roundToInt()} days.")
+                    }
+                }
                 else if (!Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) && !Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusPartyTimeout")){
                     dialog.optionPanel.addOption("Raid requests", "ds_nexusPartyTimeShow")
                 }
@@ -137,6 +145,14 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
             dialog.optionPanel.setTooltip("ds_nexusConstructMenu", "Construct a new Mothership")
             if (Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) && Global.getSector().memoryWithoutUpdate.getInt("\$ds_nexusParty")==1){
                 dialog.optionPanel.addOption("Raid rewards", "ds_nexusPartyTimeReward")
+            }
+            else if (Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusPartyTimeout")){
+                dialog.optionPanel.addOption("Raid cooldown", "ds_nexusPartyCoolDown")
+                dialog.optionPanel.setEnabled("ds_nexusPartyCoolDown", false)
+                val expire = Global.getSector().memoryWithoutUpdate.getExpire("\$ds_nexusPartyTimeout")
+                if  (expire > 0f){
+                    dialog.optionPanel.setTooltip("ds_nexusPartyCoolDown","You may throw another party in ${expire.roundToInt()} days.")
+                }
             }
             else if (!Global.getSector().intelManager.hasIntelOfClass(ds_nexusRaidIntel::class.java) && !Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusPartyTimeout")){
                 dialog.optionPanel.addOption("Raid requests", "ds_nexusPartyTimeShow")
