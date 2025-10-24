@@ -1,3 +1,6 @@
+v0.16 (2025/10/24)
+- Raid dialog fix
+
 v0.15 (2025/10/23)
 - Set SoTF factions relations to neutral at Start
 
