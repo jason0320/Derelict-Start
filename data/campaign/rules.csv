@@ -32,7 +32,7 @@ ds_nexusDialog7,DialogOptionSelected,$option == ds_nexusBack,ds_nexusStartRulecm
 ds_nexusDialog8,DialogOptionSelected,"$option == salExplore
 #$faction.id == derelict
 $customType == derelict_mothership score:10000
-$global.ds_nexusStart",ds_nexusStartRulecmd 5,,,# TODO: FINISH ADDING DERELICT RAID QUEST,,,,,,,,,,,,
+$global.ds_nexusStart",ds_nexusStartRulecmd 5,,,,,,,,,,,,,,,
 ds_nexusConstructMenu,DialogOptionSelected,$option == ds_nexusConstructMenu,ds_nexusStartRulecmd 14,"With sufficient materials, you may dispatch a fleet to a target star system to construct a new Mothership. It will be fully operational 30 days after the fleet arrives. You must have visited the system at least once.
 You may only dispatch one fleet every 90 days.","0:ds_nexusConstruct:Choose a location
 50:ds_nexusBack:Back",,,,,,,,,

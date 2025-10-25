@@ -33,7 +33,8 @@ class DS_modPlugin: BaseModPlugin() {
                             else -> role = "combatSmall"
                         }
                         for (variant in variants) {
-                            if (Global.getSettings().getVariant(variant).hullSpec.hullId == it && Global.getSettings().getVariant(variant).isGoalVariant) {
+                            //if (Global.getSettings().getVariant(variant).hullSpec.hullId == it && Global.getSettings().getVariant(variant).isGoalVariant) {
+                            if (Global.getSettings().getVariant(variant).hullSpec.hullId == it) {
                                 Global.getSettings().addDefaultEntryForRole(role, variant, 0f) // set 0 weight so it doesn't bleed over into other fleets (if we learned the eternity and set it to >0 weight, it would spawn in enigma fleets. this is bad!)
                                 Global.getSettings().addEntryForRole(Factions.DERELICT, role, variant, (0.5f)) // 1 weight is actually pretty high
                             }

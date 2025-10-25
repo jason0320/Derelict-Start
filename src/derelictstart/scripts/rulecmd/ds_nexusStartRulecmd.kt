@@ -41,6 +41,7 @@ import lunalib.lunaExtensions.getCustomEntitiesWithType
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
 import org.magiclib.util.MagicCampaign
+import second_in_command.misc.previouslyLoadedSprite
 import java.awt.Color
 import kotlin.math.roundToInt
 
@@ -161,6 +162,7 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
             dialog.optionPanel.addOption("Leave", "defaultLeave")
             dialog.optionPanel.setShortcut("ds_nexusRepair", Keyboard.KEY_A, false, false,false , false)
             //dialog.visualPanel.showPersonInfo(dialog.interactionTarget.activePerson)
+            dialog.visualPanel.showImageVisual(dialog.interactionTarget.customInteractionDialogImageVisual)
         }
             6 -> {
 
@@ -207,19 +209,25 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
                 dialog!!.textPanel.setFontSmallInsignia()
                 dialog.optionPanel.clearOptions()
                 dialog.textPanel.addPara("The ${ship!!.shipName} has been deconstructed. Moments later, a sonorous chime emits from the Mothership.")
-                remmy.addKnownShip(ship!!.hullSpec.baseHullId, false)
-                remmy.alwaysKnownShips.add(ship!!.hullSpec.baseHullId)
-                remmy.addUseWhenImportingShip(ship!!.hullSpec.baseHullId)
+//                remmy.addKnownShip(ship!!.hullSpec.baseHullId, false)
+//                remmy.alwaysKnownShips.add(ship!!.hullSpec.baseHullId)
+//                remmy.addUseWhenImportingShip(ship!!.hullSpec.baseHullId)
+                remmy.addKnownShip(ship!!.hullSpec.hullId, false)
+                remmy.alwaysKnownShips.add(ship!!.hullSpec.hullId)
+                remmy.addUseWhenImportingShip(ship!!.hullSpec.hullId)
                 if (ship!!.hullSpec.baseHullId != "rat_genesis") {
                     val varlist = Global.getSettings().allVariantIds
                     val shipvarlist = ArrayList<String>()
                     varlist.forEach {
-                        if (Global.getSettings().getVariant(it).hullSpec.baseHullId == ship!!.hullSpec.baseHullId && Global.getSettings().getVariant(it).isGoalVariant) {
-                            shipvarlist.add(it)
+                        //if (Global.getSettings().getVariant(it).hullSpec.baseHullId == ship!!.hullSpec.baseHullId && Global.getSettings().getVariant(it).isGoalVariant) {
+                        if (Global.getSettings().getVariant(it).hullSpec.baseHullId == ship!!.hullSpec.baseHullId) {
+
+                                shipvarlist.add(it)
                         }
                     }
                     var role = "combatSmall"
-                    when (Global.getSettings().getHullSpec(ship!!.hullSpec.baseHullId).hullSize) {
+                    //when (Global.getSettings().getHullSpec(ship!!.hullSpec.baseHullId).hullSize) {
+                    when (Global.getSettings().getHullSpec(ship!!.hullSpec.hullId).hullSize) {
                         ShipAPI.HullSize.CAPITAL_SHIP -> role = "combatCapital"
                         ShipAPI.HullSize.CRUISER -> role = "combatLarge"
                         ShipAPI.HullSize.DESTROYER -> role = "combatMedium"
@@ -233,13 +241,15 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
 
                 Global.getSector().playerFleet.removeFleetMemberWithDestructionFlash(ship)
                 Global.getSoundPlayer().playUISound("ui_industry_install_any_item", 1f, 1f)
-                val spec = Global.getSettings().getHullSpec(ship!!.hullSpec.baseHullId)
+                //val spec = Global.getSettings().getHullSpec(ship!!.hullSpec.baseHullId)
+                val spec = Global.getSettings().getHullSpec(ship!!.hullSpec.hullId)
                 val banlist = ArrayList<String>()
                 banlist.add("sotf_dustkeepers_burnouts")
                 banlist.add("rat_abyssals")
                 banlist.add("ai_all")
                 Global.getSector().allFactions.forEach {
-                    if (!banlist.contains(it.id) && it.knowsShip(ship!!.hullSpec.baseHullId) && it.factionSpec.id != "derelict") {
+                    //if (!banlist.contains(it.id) && it.knowsShip(ship!!.hullSpec.baseHullId) && it.factionSpec.id != "derelict") {
+                    if (!banlist.contains(it.id) && it.knowsShip(ship!!.hullSpec.hullId) && it.factionSpec.id != "derelict") {
                         factionspec = it.id
                         if (factionspec == "rat_abyssals_deep" || factionspec == "tahlan_legiodaemons" || factionspec == "vestige"){
                             hascores = true // need to hardcode this because there's no way to know
@@ -793,7 +803,6 @@ fun showRecountInfo(dialog: InteractionDialogAPI){
     banlist.add("sotf_dustkeepers_burnouts")
     banlist.add("rat_abyssals")
     banlist.add("ai_all")
-    banlist.add("remnants")
     val factionlist = ArrayList<String>() // TODO: blacklist more hidden mod factions because the way this works is retarded
     // in order this gets all faction specs, then on each faction spec it gets all their known ships, and then on each of those ships...
     // it checks if the factionlist doesn't already contain the faction the ship corresponds to, whether it's in the banlist, then checks if it's actually automated and not remnant tagged
