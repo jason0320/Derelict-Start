@@ -81,6 +81,10 @@ class ds_remnantCustomStart: CustomStart() {
                 SCUtils.getPlayerData().addOfficerToFleet(officer)
                 SCUtils.getPlayerData().setOfficerInEmptySlotIfAvailable(officer)
             }
+            else {
+                var player = Global.getSector().getPlayerPerson()
+                player.stats.setSkillLevel(Skills.AUTOMATED_SHIPS, 2f)
+            }
 
             val fleet: CampaignFleetAPI = Global.getSector().playerFleet
             Global.getSector().getFaction(Factions.DERELICT).relToPlayer.rel = 100f
