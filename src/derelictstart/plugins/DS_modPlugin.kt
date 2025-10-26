@@ -55,21 +55,25 @@ class DS_modPlugin: BaseModPlugin() {
     }
 
     override fun onNewGameAfterEconomyLoad() {
-        val player = Global.getSector().getFaction(Factions.PLAYER)
-        for (faction in Global.getSector().getAllFactions()) {
-            val factionId = faction.getId()
-            if (factionId == Factions.PLAYER) continue
-            if (factionId == Factions.DERELICT) continue
-            if (factionId == "nex_derelict") continue
-            if (factionId == Factions.REMNANTS) continue
-            if (factionId == Factions.OMEGA) continue
-            if (factionId == Factions.TRITACHYON) continue
-            if (factionId == "sotf_dustkeepers") continue
-            if (factionId == "sotf_dustkeepers_proxies") continue
-            if (factionId == "sotf_sierra_faction") continue
-            if (factionId == "sotf_dreaminggestalt") continue
+        if (Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusStart")) {
+            val player = Global.getSector().getFaction(Factions.PLAYER)
+            for (faction in Global.getSector().getAllFactions()) {
+                val factionId = faction.getId()
+                if (factionId == Factions.PLAYER) continue
+                if (factionId == Factions.DERELICT) continue
+                if (factionId == "nex_derelict") continue
+                if (factionId == Factions.REMNANTS) continue
+                if (factionId == Factions.OMEGA) continue
+                if (factionId == Factions.TRITACHYON) continue
+                if (factionId == "sotf_dustkeepers") continue
+                if (factionId == "sotf_dustkeepers_proxies") continue
+                if (factionId == "sotf_sierra_faction") continue
+                if (factionId == "sotf_dreaminggestalt") continue
 
-            player.setRelationship(factionId, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
+                player.setRelationship(factionId, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
+            }
+            player.setRelationship(Factions.REMNANTS, 0f)
+            player.setRelationship(Factions.OMEGA, 0f)
         }
     }
 

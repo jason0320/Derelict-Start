@@ -405,7 +405,7 @@ class ds_nexusBuildScript(var source: CampaignFleetAPI, var loc: EntityLocation)
         val orbitDays = orbitRadius / (20f + random.nextFloat() * 5f);
         val angle = com.fs.starfarer.api.util.Misc.getAngleInDegrees(system.getCenter().getLocation(), source.getLocation());
         stable.setCircularOrbit(system.getCenter(), angle, orbitRadius, orbitDays);
-        system.addTag(Tags.THEME_DERELICT_MOTHERSHIP) // necessary for other remnant-related stuff to work properly
+        system.addTag(Tags.THEME_DERELICT_MOTHERSHIP) // necessary for other derelict-related stuff to work properly
 //        source.addAssignment(FleetAssignment.GO_TO_LOCATION_AND_DESPAWN, fleet, 999f)
     }
 }
