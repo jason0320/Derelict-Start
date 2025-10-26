@@ -1,9 +1,7 @@
 id,trigger,conditions,script,text,options,notes,,,,,,,,
 # nexus custom start interactions,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
-ds_nexusOpen,DialogOptionSelected,"$option == salExplore
-#$faction.id == derelict
-$customType == derelict_mothership
+ds_nexusOpen,ShowSalvageEntityDetails,"$customType == derelict_mothership
 $global.ds_nexusStart score:10000
 $player.commissionFactionId == derelict","ds_nexusStartRulecmd 0
 ShowImageVisual orbital","The Explorarium Mothership welcomes you into its graces, allowing you to make use of its services.","0:ds_nexusCargoPicker:Evaluate the Mothership's cargo

@@ -74,6 +74,10 @@ class DS_modPlugin: BaseModPlugin() {
             }
             player.setRelationship(Factions.REMNANTS, 0f)
             player.setRelationship(Factions.OMEGA, 0f)
+
+            val remmy = Global.getSector().getFaction(Factions.DERELICT)
+            remmy.setRelationship(Factions.REMNANTS, 0f)
+            remmy.setRelationship(Factions.OMEGA, 0f)
         }
     }
 

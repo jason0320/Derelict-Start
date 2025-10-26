@@ -1,3 +1,3 @@
 name,id,tags,tech/manufacturer,rarity,base price,stack size,cargo space,baseRaidDanger,icon,sound id,sound id drop,plugin,plugin params,desc,order
 ,,,,,,,,,,,,,,,
-e,sb_packedShip,,,,1,1,1,,,,,data.derelictstart.econ.items.ds_packedShip,,,695
+e,ds_packedShip,,,,1,1,1,,,,,data.derelictstart.econ.items.ds_packedShip,,,695

@@ -1,3 +1,7 @@
+v1.6 (2025/10/26)
+- Dialog fix
+- Make robot factions not hostile to each other
+
 v1.5 (2025/10/26)
 - Add LunaLib as dependency
 - Add Automated Ships skill for players without Second in Command
