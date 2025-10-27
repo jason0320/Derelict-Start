@@ -139,32 +139,34 @@ class ds_nexusHostilityIntel: BaseIntelPlugin(), EconomyTickListener {
 
                 val loc = getPlayerLocation()
                 if (Misc.getDistance(loc, Vector2f(0f, 0f)) > 12000f && Misc.getDistance(loc, Vector2f(0f,0f)) < 35000f) {
-                    val fleet = MagicCampaign.createFleetBuilder()
-                    .setFleetFaction(Factions.INDEPENDENT)
+                    if (Global.getSector().getFaction(Factions.PLAYER).getRelationship(Factions.INDEPENDENT)<=-0.6f) {
+                        val fleet = MagicCampaign.createFleetBuilder()
+                            .setFleetFaction(Factions.INDEPENDENT)
                             .setReinforcementFaction(Factions.MERCENARY)
                             .setFleetName("Mercenary Hunters")
                             .setFleetType(FleetTypes.MERC_BOUNTY_HUNTER)
                             .setTransponderOn(true)
                             .setAssignmentTarget(pfleet)
                             .setAssignment(FleetAssignment.INTERCEPT)
-                            .setMinFP((pfleet.fleetPoints*1.1f).coerceAtMost(600f).roundToInt())
+                            .setMinFP((pfleet.fleetPoints * 1.1f).coerceAtMost(600f).roundToInt())
                             .setQualityOverride(2f)
                             .setSpawnLocation(Misc.findNearestJumpPointTo(pfleet, true))
                             .create()
-                    fleet.memoryWithoutUpdate.apply {
-                        set(MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER, true)
-                        set(MemFlags.MEMORY_KEY_MAKE_HOSTILE, true)
-                        set(MemFlags.MEMORY_KEY_IGNORE_PLAYER_COMMS, true)
-                        set(MemFlags.MEMORY_KEY_PURSUE_PLAYER, true)
-                        set(MemFlags.MEMORY_KEY_MAKE_PREVENT_DISENGAGE, true)
-                        set(MemFlags.FLEET_IGNORES_OTHER_FLEETS, true)
-                        set(MemFlags.FLEET_IGNORED_BY_OTHER_FLEETS, true)
-                        set(MemFlags.FLEET_DO_NOT_IGNORE_PLAYER, true)
+                        fleet.memoryWithoutUpdate.apply {
+                            set(MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER, true)
+                            set(MemFlags.MEMORY_KEY_MAKE_HOSTILE, true)
+                            set(MemFlags.MEMORY_KEY_IGNORE_PLAYER_COMMS, true)
+                            set(MemFlags.MEMORY_KEY_PURSUE_PLAYER, true)
+                            set(MemFlags.MEMORY_KEY_MAKE_PREVENT_DISENGAGE, true)
+                            set(MemFlags.FLEET_IGNORES_OTHER_FLEETS, true)
+                            set(MemFlags.FLEET_IGNORED_BY_OTHER_FLEETS, true)
+                            set(MemFlags.FLEET_DO_NOT_IGNORE_PLAYER, true)
+                        }
+                        fleet.addScript(fleetDespawner(fleet, clock.timestamp))
                     }
-                    fleet.addScript(fleetDespawner(fleet, clock.timestamp))
 
                 } else {
-                    val elegiblemarkets = Misc.getNearbyMarkets(getPlayerLocation(), 25f).filter { factionlist.contains(it.factionId) && it.size > 3 && it.hasSpaceport() && !it.isPlayerOwned && it.primaryEntity != null }
+                    val elegiblemarkets = Misc.getNearbyMarkets(getPlayerLocation(), 25f).filter { factionlist.contains(it.factionId) && it.size > 3 && it.hasSpaceport() && !it.isPlayerOwned && it.primaryEntity != null && it.faction.getRelationship(Factions.PLAYER) <= -0.6f }
                     if (elegiblemarkets.isEmpty()) return
                     val marketpicker = WeightedRandomPicker<MarketAPI>()
                     marketpicker.addAll(elegiblemarkets)
