@@ -1,0 +1,10 @@
+{
+    "masterVersionFile":"https://raw.githubusercontent.com/jason0320/Derelict-Start/main/derelictstart.version",
+    "modName":"zz Derelict Start",
+    "modVersion":
+    {
+        "major":1,
+        "minor":8,
+        "patch":0
+    },
+}
