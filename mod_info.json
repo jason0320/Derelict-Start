@@ -2,7 +2,7 @@
   	"id":"zz derelictstart",
 	"name":"zz Derelict Start",
 	"author":"gamer",	
-	"version":"1.7",
+	"version":"1.8",
 	"description":"Add Derelict Start",
 	"gameVersion":"0.98a-RC8",
 	"jars":["jars/derelictstart.jar"],
@@ -19,6 +19,10 @@
 		{
 			"id": "lunalib",
 			"name": "LunaLib",
+		},
+		{
+			"id": "nexerelin",
+			"name": "Nexerelin",
 		},
 		],
 }

@@ -6,6 +6,8 @@ import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.InteractionDialogAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
+import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.campaign.econ.SubmarketAPI
 import com.fs.starfarer.api.campaign.rules.MemKeys
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.characters.CharacterCreationData
@@ -107,20 +109,39 @@ class ds_remnantCustomStart: CustomStart() {
             //val stationsystem = Global.getSector().getStarSystem("corvus")
             val stationsystem = Global.getSector().getSystemsWithTag(Tags.THEME_DERELICT_MOTHERSHIP).get(0)
             val station: SectorEntityToken = stationsystem.addCustomEntity("ds_nexusStorage", "Mothership Global Storage", "station_side05", Factions.NEUTRAL)
-           // val market: MarketAPI = Global.getFactory().createMarket("ds_nexusStorage", "Nexus Global Storage", 0)
             Misc.setAbandonedStationMarket("ds_nexusStorage", station)
             station.sensorProfile = 0f
             station.setInteractionImage("icons", "derelictflag")
-
             station.market.addIndustry(Industries.SPACEPORT)
+            station.setCircularOrbitPointingDown(stationsystem.center, 0f, 10000f, 9999f)
+
+            if (Global.getSettings().modManager.isModEnabled("aotd_qol")) {
+                val station1: SectorEntityToken = stationsystem.addCustomEntity(
+                    "ds_nexusStation",
+                    "Derelict Station",
+                    "station_side05",
+                    Factions.DERELICT
+                )
+                val market: MarketAPI = Global.getFactory().createMarket("ds_nexusMarket", "Derelict Market", 10)
+                market.factionId = Factions.DERELICT
+                market.primaryEntity = station1
+                station1.market = market
+                market.addIndustry(Industries.SPACEPORT)
+                market.addSubmarket(Submarkets.SUBMARKET_STORAGE)
+                market.surveyLevel = MarketAPI.SurveyLevel.FULL
+                Global.getSector().economy.addMarket(market, false)
+
+                station1.sensorProfile = 0f
+                station1.setInteractionImage("icons", "derelictflag")
+                station1.setCircularOrbitPointingDown(stationsystem.center, 0f, 10000f, 9999f)
+            }
+
+            //station.market.addIndustry(Industries.SPACEPORT)
 
             //station.market.getSubmarket(Submarkets.SUBMARKET_STORAGE).cargo.addMothballedShip(FleetMemberType.SHIP, "fulgent_Assault", "Engiels")
             //station.market.getSubmarket(Submarkets.SUBMARKET_STORAGE).cargo.addMothballedShip(FleetMemberType.SHIP, "glimmer_Support", "Gomiel")
             //station.market.getSubmarket(Submarkets.SUBMARKET_STORAGE).cargo.addMothballedShip(FleetMemberType.SHIP, "glimmer_Support", "Halitosis")
-
-            station.setCircularOrbitPointingDown(stationsystem.center, 0f, 100000f, 9999f)
-
-
+            
         }
         data.addScriptBeforeTimePass {
             val nexii = Global.getSector().getCustomEntitiesWithType(Entities.DERELICT_MOTHERSHIP)
@@ -140,6 +161,11 @@ class ds_remnantCustomStart: CustomStart() {
             Global.getSector().intelManager.addIntel(ds_nexusLocationIntel(), false)
             FactionCommissionIntel(Global.getSector().getFaction(Factions.DERELICT)).missionAccepted()
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", startloc.id)
+
+            val faction = Global.getSector().getFaction(Factions.DERELICT)
+            if (faction != null) {
+                faction.isShowInIntelTab = true
+            }
         }
 
 

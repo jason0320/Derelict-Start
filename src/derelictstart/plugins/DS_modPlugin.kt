@@ -51,6 +51,7 @@ class DS_modPlugin: BaseModPlugin() {
                 derelictFaction.setRelationship(nexderelictFaction.id, 100f)
                 nexderelictFaction.setRelationship(derelictFaction.id, 100f)
             }
+
         }
     }
 
@@ -78,7 +79,9 @@ class DS_modPlugin: BaseModPlugin() {
             val remmy = Global.getSector().getFaction(Factions.DERELICT)
             remmy.setRelationship(Factions.REMNANTS, 0f)
             remmy.setRelationship(Factions.OMEGA, 0f)
+
         }
+
     }
 
 }
