@@ -1,4 +1,5 @@
 {
+	"showIntelEvenIfDead":false,
 	"showInIntelTab":true,
 	"custom":{
 		"offersCommissions":true,

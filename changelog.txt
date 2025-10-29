@@ -1,3 +1,7 @@
+v2.0 (2025/10/28)
+- Add version file
+- Fix bugs with Ashes of The Domain Question of Loyalty
+
 v1.8 (2025/10/28)
 - Add Nexerelin as dependency
 - Add Ashes of The Domain Question of Loyalty compatibility

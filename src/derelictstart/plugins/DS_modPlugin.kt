@@ -52,6 +52,10 @@ class DS_modPlugin: BaseModPlugin() {
                 nexderelictFaction.setRelationship(derelictFaction.id, 100f)
             }
 
+            val remmy = Global.getSector().getFaction(Factions.DERELICT)
+            if (Global.getSettings().modManager.isModEnabled("aotd_qol")) {
+                remmy.isShowInIntelTab = true
+            }
         }
     }
 

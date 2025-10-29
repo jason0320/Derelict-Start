@@ -126,8 +126,13 @@ class ds_remnantCustomStart: CustomStart() {
                 market.factionId = Factions.DERELICT
                 market.primaryEntity = station1
                 station1.market = market
-                market.addIndustry(Industries.SPACEPORT)
+                market.addCondition(Conditions.POPULATION_10)
+                market.addSubmarket(Submarkets.SUBMARKET_OPEN)
                 market.addSubmarket(Submarkets.SUBMARKET_STORAGE)
+                market.addIndustry(Industries.SPACEPORT)
+                market.addIndustry(Industries.POPULATION)
+                market.addTag(Tags.STATION)
+                market.addTag(Tags.MARKET_NO_OFFICER_SPAWN)
                 market.surveyLevel = MarketAPI.SurveyLevel.FULL
                 Global.getSector().economy.addMarket(market, false)
 
