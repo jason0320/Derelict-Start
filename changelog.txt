@@ -1,3 +1,6 @@
+v2.1 (2025/10/28)
+- Add function to force show faction in Intel
+
 v2.0 (2025/10/28)
 - Add version file
 - Fix bugs with Ashes of The Domain Question of Loyalty
