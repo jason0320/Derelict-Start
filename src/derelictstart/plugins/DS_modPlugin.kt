@@ -82,6 +82,8 @@ class DS_modPlugin: BaseModPlugin() {
             remmy.setRelationship(Factions.REMNANTS, 0f)
             remmy.setRelationship(Factions.OMEGA, 0f)
 
+            Global.getSector().getFaction(Factions.REMNANTS).setRelationship(Factions.DERELICT, 0f)
+            Global.getSector().getFaction(Factions.OMEGA).setRelationship(Factions.DERELICT, 0f)
         }
 
     }
