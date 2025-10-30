@@ -1,3 +1,6 @@
+v2.2 (2025/10/30)
+- Change skill to be immune to space hazards
+
 v2.1 (2025/10/28)
 - Add function to force show faction in Intel
 

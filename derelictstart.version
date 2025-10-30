@@ -1,11 +1,11 @@
 {
     "masterVersionFile":"https://raw.githubusercontent.com/jason0320/Derelict-Start/main/derelictstart.version",
     "modName":"zz Derelict Start",
-    "directDownloadURL": "https://github.com/jason0320/Derelict-Start/latest/download/zz.Derelict.Start-v2.1.zip",
+    "directDownloadURL": "https://github.com/jason0320/Derelict-Start/latest/download/zz.Derelict.Start-v2.2.7z",
     "modVersion":
     {
         "major":2,
-        "minor":1,
+        "minor":2,
         "patch":0
     },
 

@@ -9,6 +9,7 @@ import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.skills.BaseSkillEffectDescription
 import com.fs.starfarer.api.impl.hullmods.Automated
@@ -30,6 +31,7 @@ class ds_paradeigma: BaseSkillEffectDescription(), ShipSkillEffect {
         info.addPara("If you have no human officers, automated ships do not suffer from the normal CR penalty.", 0f).setHighlight("no human officers," ,"do not")
         info.addPara("Additionally, AI cores integrated into ships will grant additional deployment points in combat.\nHigher level AI cores grant more.",0f).setHighlight("integrated")
         info.addPara("This bonus maxes out at +20% deployment points.", 0f).setHighlight("+20%")
+        info.addPara("Also prevents all damage from solar corona and similar hazards", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
 
@@ -45,6 +47,7 @@ class ds_paradeigma: BaseSkillEffectDescription(), ShipSkillEffect {
         }
         Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE)
        Automated.MAX_CR_PENALTY = 0f
+        stats!!.dynamic.getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f)
     }
 
     override fun unapply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
