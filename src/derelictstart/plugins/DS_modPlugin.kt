@@ -4,11 +4,9 @@ import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
-import com.fs.starfarer.api.campaign.SectorAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import exerelin.campaign.DiplomacyManager
-
 
 
 class DS_modPlugin: BaseModPlugin() {
@@ -42,16 +40,20 @@ class DS_modPlugin: BaseModPlugin() {
                 }
             }
 
-            val derelictFaction: FactionAPI? = Global.getSector().getFaction("derelict")
-            val nexderelictFaction: FactionAPI? = Global.getSector().getFaction("nex_derelict")
-            if (derelictFaction != null && nexderelictFaction != null) {
-                val playerFaction: FactionAPI = Global.getSector().playerFaction
-                playerFaction.setRelationship(nexderelictFaction.id, 100f)
-                nexderelictFaction.setRelationship(playerFaction.id, 100f)
-                derelictFaction.setRelationship(nexderelictFaction.id, 100f)
-                nexderelictFaction.setRelationship(derelictFaction.id, 100f)
+            if (newGame) {
+                val derelictFaction: FactionAPI? = Global.getSector().getFaction("derelict")
+                val nexderelictFaction: FactionAPI? = Global.getSector().getFaction("nex_derelict")
+                if (derelictFaction != null && nexderelictFaction != null) {
+                    val playerFaction: FactionAPI = Global.getSector().playerFaction
+                    playerFaction.setRelationship(nexderelictFaction.id, 100f)
+                    nexderelictFaction.setRelationship(playerFaction.id, 100f)
+                    derelictFaction.setRelationship(nexderelictFaction.id, 100f)
+                    nexderelictFaction.setRelationship(derelictFaction.id, 100f)
+                }
+                Global.getSector().getFaction(Factions.PLAYER).setRelationship(Factions.REMNANTS, 0f)
+                Global.getSector().getFaction(Factions.PLAYER).setRelationship(Factions.OMEGA, 0f)
             }
-
+            
             val remmy = Global.getSector().getFaction(Factions.DERELICT)
             remmy.isShowInIntelTab = true
         }
@@ -75,17 +77,7 @@ class DS_modPlugin: BaseModPlugin() {
 
                 player.setRelationship(factionId, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
             }
-            player.setRelationship(Factions.REMNANTS, 0f)
-            player.setRelationship(Factions.OMEGA, 0f)
-
-            val remmy = Global.getSector().getFaction(Factions.DERELICT)
-            remmy.setRelationship(Factions.REMNANTS, 0f)
-            remmy.setRelationship(Factions.OMEGA, 0f)
-
-            Global.getSector().getFaction(Factions.REMNANTS).setRelationship(Factions.DERELICT, 0f)
-            Global.getSector().getFaction(Factions.OMEGA).setRelationship(Factions.DERELICT, 0f)
         }
-
     }
 
 }
