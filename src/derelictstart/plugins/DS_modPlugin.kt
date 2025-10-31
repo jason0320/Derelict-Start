@@ -52,6 +52,13 @@ class DS_modPlugin: BaseModPlugin() {
                 }
                 Global.getSector().getFaction(Factions.PLAYER).setRelationship(Factions.REMNANTS, 0f)
                 Global.getSector().getFaction(Factions.PLAYER).setRelationship(Factions.OMEGA, 0f)
+                Global.getSector().getFaction(Factions.DERELICT).setRelationship(Factions.REMNANTS, 0f)
+                Global.getSector().getFaction(Factions.DERELICT).setRelationship(Factions.OMEGA, 0f)
+
+                Global.getSector().playerFleet.fleetData.membersListCopy.forEach {
+                    it.repairTracker.cr = 1f
+                    it.status.hullFraction = 1f
+                }
             }
             
             val remmy = Global.getSector().getFaction(Factions.DERELICT)

@@ -47,6 +47,7 @@ class ds_paradeigma: BaseSkillEffectDescription(), ShipSkillEffect {
         }
         Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE)
        Automated.MAX_CR_PENALTY = 0f
+
         stats!!.dynamic.getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0f)
     }
 
