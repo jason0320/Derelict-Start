@@ -72,8 +72,15 @@ FireBest MarketPostDock","$TheFactionLong $factionIsOrAre in control of this loc
 ds_nex_marketOptionCommDirDerelicts,PopulateOptions,"$hasMarket
 $menuState == main
 $global.ds_nexusStart score:10000
-$faction.id == nex_derelict score:1000",SetEnabled marketCommDir true,,,
-,,,,,,
+$faction.id == nex_derelict score:1000",SetEnabled marketCommDir true,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+ds_nexHistorianOmegaSkip,OpenCommLink,"
+ds_getHistorianOmega 1
+$global.ds_nexusStart score:10000
+$player.commissionFactionId == derelict","
+ds_getHistorianOmega 2","A fleet of Remnant drones is intercepting you, but you may transmit your IFF code to disengage it.",0:ds_noyeetOmega:Continue as normal,,,,,,,,,,,,,
+ds_nexHistorianOmegaSkip2,DialogOptionSelected,$option == ds_yeetOmega,ds_getHistorianOmega 3,"Your $shipOrFleet chirps out a request with your transponder code, with a request to stand down. Some moments later, the drone interceptors process the information and plod away in search of a new task.",0:defaultLeave:Continue,,,,,,,,,,,,,
+ds_nexHistorianOmegaSkip3,DialogOptionSelected,$option == ds_noyeetOmega,FireAll Nex_HistorianOmegaHailOpts,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,

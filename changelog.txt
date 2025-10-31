@@ -1,3 +1,7 @@
+v2.4 (2025/10/31)
+- Make Industrial.Evolution Derelict not hostile at start
+- Make player able to dismiss a certain Remnant/Omega fleet from Nexerelin after fighting Hypershunt
+
 v2.3.3 (2025/10/31)
 - Fix skill to give space hazards immunity to all ships
 - All ships are 100% CR at start now
