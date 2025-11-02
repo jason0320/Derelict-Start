@@ -1,3 +1,6 @@
+v2.4.1 (2025/11/2)
+- Fix deconstructing ships with dmod bug
+
 v2.4 (2025/10/31)
 - Make Industrial.Evolution Derelict not hostile at start
 - Make player able to dismiss a certain Remnant/Omega fleet from Nexerelin after fighting Hypershunt

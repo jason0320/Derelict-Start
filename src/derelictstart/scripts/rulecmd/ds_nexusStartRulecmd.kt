@@ -28,6 +28,7 @@ import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import data.derelictstart.customStart.ds_chauffeurAI
 import data.derelictstart.customStart.ds_nexusCustomProduction
+import data.derelictstart.customStart.ds_nexusCustomProduction.Companion.fixVariant
 import data.derelictstart.customStart.ds_nexusRaidIntel
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.METALS_PER_NEXUS
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.RARE_METALS_PER_NEXUS
@@ -196,9 +197,9 @@ class ds_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
 //                remmy.addKnownShip(ship!!.hullSpec.baseHullId, false)
 //                remmy.alwaysKnownShips.add(ship!!.hullSpec.baseHullId)
 //                remmy.addUseWhenImportingShip(ship!!.hullSpec.baseHullId)
-                remmy.addKnownShip(ship!!.hullSpec.hullId, false)
-                remmy.alwaysKnownShips.add(ship!!.hullSpec.hullId)
-                remmy.addUseWhenImportingShip(ship!!.hullSpec.hullId)
+                remmy.addKnownShip(ship!!.hullSpec.restoredToHullId, false)
+                remmy.alwaysKnownShips.add(ship!!.hullSpec.restoredToHullId)
+                remmy.addUseWhenImportingShip(ship!!.hullSpec.restoredToHullId)
                 if (ship!!.hullSpec.baseHullId != "rat_genesis") {
                     val varlist = Global.getSettings().allVariantIds
                     val shipvarlist = ArrayList<String>()
