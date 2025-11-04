@@ -1,3 +1,6 @@
+v2.4.2 (2025/11/4)
+- Make Industrial.Evolution Domain System Defence not hostile (for real this time)
+
 v2.4.1 (2025/11/2)
 - Fix deconstructing ships with dmod bug
 
