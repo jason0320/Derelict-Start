@@ -1,3 +1,7 @@
+v2.4.3 (2025/11/8)
+- Make constructed Automated Personnel Carrier hullmod from Domain Explorarium Expansion ships not having Automated hullmod
+- Fix some Derelict ships from Domain Explorarium Expansion not known to Derelict
+
 v2.4.2 (2025/11/4)
 - Make Industrial.Evolution Domain System Defence not hostile (for real this time)
 

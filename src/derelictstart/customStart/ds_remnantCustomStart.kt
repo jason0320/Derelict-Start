@@ -167,6 +167,17 @@ class ds_remnantCustomStart: CustomStart() {
             FactionCommissionIntel(Global.getSector().getFaction(Factions.DERELICT)).missionAccepted()
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", startloc.id)
 
+            if (Global.getSettings().modManager.isModEnabled("dex")) {
+                val remmy = Global.getSector().getFaction(Factions.DERELICT)
+                val loader = Global.getSettings().allShipHullSpecs  // map of hullId → ShipHullSpecAPI
+                for (hull in loader) {
+                    val tags = hull.tags
+                    if (tags.contains("derelict_2") && !remmy.knownShips.contains(hull.baseHullId)) {
+                        remmy.knownShips.add(hull.hullId)
+                    }
+                }
+            }
+
             val remmy = Global.getSector().getFaction(Factions.DERELICT)
             remmy.isShowInIntelTab = true
         }

@@ -6,6 +6,7 @@ import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.ship
 import exerelin.campaign.DiplomacyManager
 
 
@@ -64,6 +65,17 @@ class DS_modPlugin: BaseModPlugin() {
             if (Global.getSettings().modManager.isModEnabled("IndEvo")) {
                 Global.getSector().getFaction(Factions.PLAYER).setRelationship("IndEvo_derelict", 0f)
                 Global.getSector().getFaction(Factions.DERELICT).setRelationship("IndEvo_derelict", 0f)
+            }
+
+            if (Global.getSettings().modManager.isModEnabled("dex")) {
+                val remmy = Global.getSector().getFaction(Factions.DERELICT)
+                val loader = Global.getSettings().allShipHullSpecs  // map of hullId → ShipHullSpecAPI
+                for (hull in loader) {
+                    val tags = hull.tags
+                    if (tags.contains("derelict_2") && !remmy.knownShips.contains(hull.baseHullId)) {
+                        remmy.knownShips.add(hull.hullId)
+                    }
+                }
             }
 
             val remmy = Global.getSector().getFaction(Factions.DERELICT)

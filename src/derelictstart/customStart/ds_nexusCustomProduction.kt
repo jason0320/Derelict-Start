@@ -54,7 +54,7 @@ class ds_nexusCustomProduction (var dialog: InteractionDialogAPI): CustomProduct
                 for (i in 0 until guy.quantity){
                     val member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, guy.specId + "_Hull")
                     member.repairTracker.cr = member.repairTracker.maxCR
-                    if (!member.variant.hasHullMod(HullMods.AUTOMATED)) member.variant.addPermaMod(HullMods.AUTOMATED)
+                    if (!member.variant.hasHullMod(HullMods.AUTOMATED) && !member.variant.hasHullMod("DEX_semiautomated")) member.variant.addPermaMod(HullMods.AUTOMATED)
                     member.fixVariant()
                     member.shipName = Global.getSector().getFaction(Factions.DERELICT).pickRandomShipName()
                     Global.getSector().playerFleet.fleetData.addFleetMember(member)
