@@ -1,3 +1,7 @@
+v2.4.4 (2025/11/9)
+- Fix AoTD Question of Loyalty compatibility
+- Fix SoTF faction hostility
+
 v2.4.3 (2025/11/8)
 - Make constructed Automated Personnel Carrier hullmod from Domain Explorarium Expansion ships not having Automated hullmod
 - Fix some Derelict ships from Domain Explorarium Expansion not known to Derelict

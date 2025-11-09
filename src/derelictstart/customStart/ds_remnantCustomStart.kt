@@ -122,11 +122,11 @@ class ds_remnantCustomStart: CustomStart() {
                     "station_side05",
                     Factions.DERELICT
                 )
-                val market: MarketAPI = Global.getFactory().createMarket("ds_nexusMarket", "Derelict Market", 10)
+                val market: MarketAPI = Global.getFactory().createMarket("ds_nexusMarket", "Derelict Market", 1)
                 market.factionId = Factions.DERELICT
                 market.primaryEntity = station1
                 station1.market = market
-                market.addCondition(Conditions.POPULATION_10)
+                market.addCondition(Conditions.POPULATION_1)
                 market.addSubmarket(Submarkets.SUBMARKET_OPEN)
                 market.addSubmarket(Submarkets.SUBMARKET_STORAGE)
                 market.addIndustry(Industries.SPACEPORT)

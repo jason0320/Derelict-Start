@@ -5,6 +5,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.impl.campaign.ids.Conditions
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.ship
 import exerelin.campaign.DiplomacyManager
@@ -55,6 +56,17 @@ class DS_modPlugin: BaseModPlugin() {
                 Global.getSector().getFaction(Factions.PLAYER).setRelationship(Factions.OMEGA, 0f)
                 Global.getSector().getFaction(Factions.DERELICT).setRelationship(Factions.REMNANTS, 0f)
                 Global.getSector().getFaction(Factions.DERELICT).setRelationship(Factions.OMEGA, 0f)
+                
+                if (Global.getSettings().modManager.isModEnabled("secretsofthefrontier")) {
+                    Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_dustkeepers", 0f)
+                    Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_dustkeepers_proxies", 0f)
+                    Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_sierra_faction", 0f)
+                    Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_dreaminggestalt", 0f)
+                    Global.getSector().getFaction(Factions.DERELICT).setRelationship("sotf_dustkeepers", 0f)
+                    Global.getSector().getFaction(Factions.DERELICT).setRelationship("sotf_dustkeepers_proxies", 0f)
+                    Global.getSector().getFaction(Factions.DERELICT).setRelationship("sotf_sierra_faction", 0f)
+                    Global.getSector().getFaction(Factions.DERELICT).setRelationship("sotf_dreaminggestalt", 0f)
+                }
 
                 Global.getSector().playerFleet.fleetData.membersListCopy.forEach {
                     it.repairTracker.cr = 1f
@@ -65,6 +77,26 @@ class DS_modPlugin: BaseModPlugin() {
             if (Global.getSettings().modManager.isModEnabled("IndEvo")) {
                 Global.getSector().getFaction(Factions.PLAYER).setRelationship("IndEvo_derelict", 0f)
                 Global.getSector().getFaction(Factions.DERELICT).setRelationship("IndEvo_derelict", 0f)
+            }
+
+            if (Global.getSettings().modManager.isModEnabled("aotd_qol")) {
+                val market = Global.getSector().economy.getMarket("ds_nexusMarket")
+                if (market.hasCondition(Conditions.DECIVILIZED_SUBPOP)){
+                    market.removeCondition(Conditions.DECIVILIZED_SUBPOP)
+                }
+                if (market.hasCondition(Conditions.DECIVILIZED)){
+                    market.removeCondition(Conditions.DECIVILIZED)
+                }
+                for (i in 2..10) {
+                    val condId = "population_$i"
+                    if (market.hasCondition(condId)) {
+                        market.removeCondition(condId)
+                        market.addCondition(Conditions.POPULATION_1)
+                    }
+                }
+                if (market.size != 1) {
+                    market.size = 1
+                }
             }
 
             if (Global.getSettings().modManager.isModEnabled("dex")) {
