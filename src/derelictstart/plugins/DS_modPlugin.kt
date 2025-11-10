@@ -5,6 +5,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
 import com.fs.starfarer.api.combat.ShipAPI
+import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.Conditions
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.ship
@@ -81,21 +82,32 @@ class DS_modPlugin: BaseModPlugin() {
 
             if (Global.getSettings().modManager.isModEnabled("aotd_qol")) {
                 val market = Global.getSector().economy.getMarket("ds_nexusMarket")
-                if (market.hasCondition(Conditions.DECIVILIZED_SUBPOP)){
-                    market.removeCondition(Conditions.DECIVILIZED_SUBPOP)
-                }
-                if (market.hasCondition(Conditions.DECIVILIZED)){
-                    market.removeCondition(Conditions.DECIVILIZED)
-                }
-                for (i in 2..10) {
-                    val condId = "population_$i"
-                    if (market.hasCondition(condId)) {
-                        market.removeCondition(condId)
-                        market.addCondition(Conditions.POPULATION_1)
+                if (market != null) {
+                    if (market.hasCondition(Conditions.DECIVILIZED_SUBPOP)) {
+                        market.removeCondition(Conditions.DECIVILIZED_SUBPOP)
                     }
-                }
-                if (market.size != 1) {
-                    market.size = 1
+                    if (market.hasCondition(Conditions.DECIVILIZED)) {
+                        market.removeCondition(Conditions.DECIVILIZED)
+                    }
+                    if (market.hasCondition(Conditions.RECENT_UNREST)){
+                        market.removeCondition(Conditions.RECENT_UNREST)
+                    }
+                    for (i in 2..10) {
+                        val condId = "population_$i"
+                        if (market.hasCondition(condId)) {
+                            market.removeCondition(condId)
+                            market.addCondition(Conditions.POPULATION_1)
+                        }
+                    }
+                    if (market.size != 1) {
+                        market.size = 1
+                    }
+                    if (market.getCommodityData(Commodities.SUPPLIES).available < 1500) {
+                        market.getCommodityData(Commodities.SUPPLIES).addTradeMod(Factions.DERELICT, 1500f, 30f)
+                    }
+                    if (market.getCommodityData(Commodities.FOOD).available < 3000) {
+                        market.getCommodityData(Commodities.FOOD).addTradeMod(Factions.DERELICT, 3000f, 30f)
+                    }
                 }
             }
 

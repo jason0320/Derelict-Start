@@ -1,3 +1,6 @@
+v2.4.5 (2025/11/10)
+- Duct tape fix to try to make pseudo market for AoTD Question of Loyalty not deciv and disappear
+
 v2.4.4 (2025/11/9)
 - Fix AoTD Question of Loyalty compatibility
 - Fix SoTF faction hostility

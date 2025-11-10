@@ -136,6 +136,9 @@ class ds_remnantCustomStart: CustomStart() {
                 market.surveyLevel = MarketAPI.SurveyLevel.FULL
                 Global.getSector().economy.addMarket(market, false)
 
+                market.getCommodityData(Commodities.SUPPLIES).addTradeMod(Factions.DERELICT, 1500f, 30f)
+                market.getCommodityData(Commodities.FOOD).addTradeMod(Factions.DERELICT, 3000f, 30f)
+
                 station1.sensorProfile = 0f
                 station1.setInteractionImage("icons", "derelictflag")
                 station1.setCircularOrbitPointingDown(stationsystem.center, 0f, 10000f, 9999f)

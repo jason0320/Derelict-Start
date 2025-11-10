@@ -2,5 +2,6 @@
 	"showInIntelTab":true,
 	"custom":{
 		"offersCommissions":true,
+		"exemptFromFoodShortages":true,
 	},
 }
