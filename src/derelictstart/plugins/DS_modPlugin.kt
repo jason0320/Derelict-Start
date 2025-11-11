@@ -10,6 +10,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Conditions
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.ship
 import exerelin.campaign.DiplomacyManager
+import lunalib.lunaSettings.LunaSettings
 
 
 class DS_modPlugin: BaseModPlugin() {
@@ -44,6 +45,39 @@ class DS_modPlugin: BaseModPlugin() {
             }
 
             if (newGame) {
+
+                val player = Global.getSector().getFaction(Factions.PLAYER)
+                val remmy = Global.getSector().getFaction(Factions.DERELICT)
+
+                var peacefulMode = LunaSettings.getBoolean("zz derelictstart", "peacefulMode")!!
+                for (faction in Global.getSector().getAllFactions()) {
+                    val factionId = faction.getId()
+                    if (factionId == Factions.PLAYER) continue
+                    if (factionId == Factions.DERELICT) continue
+                    if (factionId == "nex_derelict") continue
+                    if (factionId == Factions.REMNANTS) continue
+                    if (factionId == Factions.OMEGA) continue
+                    if (factionId == Factions.HEGEMONY) continue
+                    if (factionId == Factions.TRITACHYON) continue
+                    if (factionId == "sotf_dustkeepers") continue
+                    if (factionId == "sotf_dustkeepers_proxies") continue
+                    if (factionId == "sotf_sierra_faction") continue
+                    if (factionId == "sotf_dreaminggestalt") continue
+
+                    if (peacefulMode) {
+                        remmy.setRelationship(factionId, 0f)
+                        remmy.setRelationship(Factions.PIRATES, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
+                        player.setRelationship(Factions.PIRATES, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
+                        remmy.setRelationship(Factions.LUDDIC_PATH, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
+                        player.setRelationship(Factions.LUDDIC_PATH, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
+                    }
+                    else
+                    {
+                        player.setRelationship(factionId, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
+                        remmy.setRelationship(factionId, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
+                    }
+                }
+
                 val derelictFaction: FactionAPI? = Global.getSector().getFaction("derelict")
                 val nexderelictFaction: FactionAPI? = Global.getSector().getFaction("nex_derelict")
                 if (derelictFaction != null && nexderelictFaction != null) {
@@ -57,7 +91,7 @@ class DS_modPlugin: BaseModPlugin() {
                 Global.getSector().getFaction(Factions.PLAYER).setRelationship(Factions.OMEGA, 0f)
                 Global.getSector().getFaction(Factions.DERELICT).setRelationship(Factions.REMNANTS, 0f)
                 Global.getSector().getFaction(Factions.DERELICT).setRelationship(Factions.OMEGA, 0f)
-                
+
                 if (Global.getSettings().modManager.isModEnabled("secretsofthefrontier")) {
                     Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_dustkeepers", 0f)
                     Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_dustkeepers_proxies", 0f)
@@ -124,27 +158,6 @@ class DS_modPlugin: BaseModPlugin() {
 
             val remmy = Global.getSector().getFaction(Factions.DERELICT)
             remmy.isShowInIntelTab = true
-        }
-    }
-
-    override fun onNewGameAfterEconomyLoad() {
-        if (Global.getSector().memoryWithoutUpdate.getBoolean("\$ds_nexusStart")) {
-            val player = Global.getSector().getFaction(Factions.PLAYER)
-            for (faction in Global.getSector().getAllFactions()) {
-                val factionId = faction.getId()
-                if (factionId == Factions.PLAYER) continue
-                if (factionId == Factions.DERELICT) continue
-                if (factionId == "nex_derelict") continue
-                if (factionId == Factions.REMNANTS) continue
-                if (factionId == Factions.OMEGA) continue
-                if (factionId == Factions.TRITACHYON) continue
-                if (factionId == "sotf_dustkeepers") continue
-                if (factionId == "sotf_dustkeepers_proxies") continue
-                if (factionId == "sotf_sierra_faction") continue
-                if (factionId == "sotf_dreaminggestalt") continue
-
-                player.setRelationship(factionId, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
-            }
         }
     }
 

@@ -1,0 +1,2 @@
+fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
+peacefulMode,Enable Peace Mode,Boolean,FALSE,,Make most factions that are not Pirates and Pathers at peace with you (Requires new save).,,,

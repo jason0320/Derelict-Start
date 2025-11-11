@@ -1,3 +1,6 @@
+v2.5 (2025/11/11)
+- Add LunaLib config "peaceful mode" that makes most factions that aren't Pirates or Pathers peaceful at start (not activated by default)
+
 v2.4.5 (2025/11/10)
 - Duct tape fix to try to make pseudo market for AoTD Question of Loyalty not deciv and disappear
 
