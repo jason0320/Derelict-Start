@@ -1,3 +1,6 @@
+v2.6 (2025/11/12)
+- Allow AoTD Question of Loyalty commission to unrestrictedly colonise
+
 v2.5 (2025/11/11)
 - Add LunaLib config "peaceful mode" that makes most factions that aren't Pirates or Pathers peaceful at start (not activated by default)
 
