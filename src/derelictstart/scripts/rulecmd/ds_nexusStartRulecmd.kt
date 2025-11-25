@@ -26,6 +26,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
+import data.derelictstart.customStart.addNexusCargo
 import data.derelictstart.customStart.ds_chauffeurAI
 import data.derelictstart.customStart.ds_nexusCustomProduction
 import data.derelictstart.customStart.ds_nexusCustomProduction.Companion.fixVariant
@@ -385,13 +386,14 @@ class ds_nexusBuildScript(var source: CampaignFleetAPI, var loc: EntityLocation)
 //            fleet, 1f, 0, maxFleets, 15f, 8, 24
 //        )
 //        system.addScript(activeFleets)
-        val stable = source.getContainingLocation().addCustomEntity(null, null, "derelict_mothership", "derelict");
+        val fleet = source.getContainingLocation().addCustomEntity(null, null, "derelict_mothership", "derelict");
         val orbitRadius = com.fs.starfarer.api.util.Misc.getDistance(source, system.getCenter());
         val orbitDays = orbitRadius / (20f + random.nextFloat() * 5f);
         val angle = com.fs.starfarer.api.util.Misc.getAngleInDegrees(system.getCenter().getLocation(), source.getLocation());
-        stable.setCircularOrbit(system.getCenter(), angle, orbitRadius, orbitDays);
+        fleet.setCircularOrbit(system.getCenter(), angle, orbitRadius, orbitDays);
         system.addTag(Tags.THEME_DERELICT_MOTHERSHIP) // necessary for other derelict-related stuff to work properly
-//        source.addAssignment(FleetAssignment.GO_TO_LOCATION_AND_DESPAWN, fleet, 999f)
+        fleet.cargo.addAll(addNexusCargo(fleet))
+        source.addAssignment(FleetAssignment.GO_TO_LOCATION_AND_DESPAWN, fleet, 999f)
     }
 }
 

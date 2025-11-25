@@ -170,6 +170,7 @@ class ds_remnantCustomStart: CustomStart() {
             val startloc = nexusstart.pick()
 
             Global.getSector().intelManager.addIntel(ds_nexusLocationIntel(), false)
+            Global.getSector().listenerManager.addListener(ds_nexusRestocker())
             FactionCommissionIntel(Global.getSector().getFaction(Factions.DERELICT)).missionAccepted()
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", startloc.id)
 

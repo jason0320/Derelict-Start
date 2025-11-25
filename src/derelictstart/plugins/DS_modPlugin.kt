@@ -1,15 +1,22 @@
 package data.derelictstart.plugins
 
 import com.fs.starfarer.api.BaseModPlugin
+import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignClockAPI
 import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.Conditions
+import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import data.derelictstart.customStart.addNexusCargo
+import data.derelictstart.customStart.ds_nexusHostilityIntel
+import data.derelictstart.customStart.ds_nexusRestocker
 import exerelin.campaign.DiplomacyManager
 import kaysaar.aotd_question_of_loyalty.data.scripts.commision.AoTDCommissionDataManager
+import lunalib.lunaExtensions.getCustomEntitiesWithType
 import lunalib.lunaSettings.LunaSettings
 
 
@@ -41,6 +48,11 @@ class DS_modPlugin: BaseModPlugin() {
                                 Global.getSettings().addEntryForRole(Factions.DERELICT, role, variant, (0.5f)) // 1 weight is actually pretty high
                             }
                         }
+                }
+
+                if (!Global.getSector().listenerManager.hasListenerOfClass(ds_nexusRestocker::class.java))
+                {
+                    Global.getSector().listenerManager.addListener(ds_nexusRestocker())
                 }
             }
 
