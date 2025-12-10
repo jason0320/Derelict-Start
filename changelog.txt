@@ -1,3 +1,6 @@
+v2.7.1 (2025/12/10)
+- Fix empty pseudo stations restock crash
+
 v2.7 (2025/11/25)
 - Make pseudo stations restock monthly
 
