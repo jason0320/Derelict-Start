@@ -38,6 +38,7 @@ import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.faction
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.rewardlist
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.ship
 import data.derelictstart.scripts.rulecmd.ds_nexusStartRulecmd.Companion.targetmarket
+import data.scripts.MothershipFleetManager
 import exerelin.campaign.DiplomacyManager
 import lunalib.lunaExtensions.getCustomEntitiesWithType
 import org.lazywizard.lazylib.MathUtils
@@ -393,6 +394,12 @@ class ds_nexusBuildScript(var source: CampaignFleetAPI, var loc: EntityLocation)
         fleet.setCircularOrbit(system.getCenter(), angle, orbitRadius, orbitDays);
         system.addTag(Tags.THEME_DERELICT_MOTHERSHIP) // necessary for other derelict-related stuff to work properly
         fleet.cargo.addAll(addNexusCargo(fleet))
+
+        if (Global.getSettings().modManager.isModEnabled("all_the_domain_drones+Vanilla")) {
+            val manager = MothershipFleetManager(fleet, 5f, 4, 6, 15f, 5, 20)
+            system.addScript(manager)
+        }
+
         source.addAssignment(FleetAssignment.GO_TO_LOCATION_AND_DESPAWN, fleet, 999f)
     }
 }

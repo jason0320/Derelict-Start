@@ -1,9 +1,7 @@
 package data.derelictstart.plugins
 
 import com.fs.starfarer.api.BaseModPlugin
-import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CampaignClockAPI
 import com.fs.starfarer.api.campaign.FactionAPI
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -11,12 +9,10 @@ import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.Conditions
 import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import data.derelictstart.customStart.addNexusCargo
-import data.derelictstart.customStart.ds_nexusHostilityIntel
 import data.derelictstart.customStart.ds_nexusRestocker
+import data.scripts.MothershipFleetManager
 import exerelin.campaign.DiplomacyManager
 import kaysaar.aotd_question_of_loyalty.data.scripts.commision.AoTDCommissionDataManager
-import lunalib.lunaExtensions.getCustomEntitiesWithType
 import lunalib.lunaSettings.LunaSettings
 
 
@@ -191,6 +187,29 @@ class DS_modPlugin: BaseModPlugin() {
                     val tags = hull.tags
                     if (tags.contains("derelict_2") && !remmy.knownShips.contains(hull.baseHullId)) {
                         remmy.knownShips.add(hull.hullId)
+                    }
+                }
+            }
+
+            if (Global.getSettings().modManager.isModEnabled("all_the_domain_drones+Vanilla")) {
+                for (system in Global.getSector().getStarSystems()) {
+                    var found = false
+                    for (script in system.getScripts()) {
+                        if (script is MothershipFleetManager) {
+                            found = true
+                            break
+                        }
+                    }
+                    if (found) continue
+
+                    for (entity in system.getAllEntities()) {
+                        if (entity.getCustomEntityType()== Entities.DERELICT_MOTHERSHIP) {
+                            val manager = MothershipFleetManager(
+                                entity,
+                                5f, 4, 6, 15f, 5, 20
+                            )
+                            system.addScript(manager)
+                        }
                     }
                 }
             }

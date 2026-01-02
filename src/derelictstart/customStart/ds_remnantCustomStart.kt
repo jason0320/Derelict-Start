@@ -108,9 +108,9 @@ class ds_remnantCustomStart: CustomStart() {
             fleet.fleetData.setSyncNeeded()
             //val stationsystem = Global.getSector().getStarSystem("corvus")
             var stationsystem = Global.getSector().getSystemsWithTag(Tags.THEME_DERELICT_MOTHERSHIP).random()
-//            if (Global.getSettings().modManager.isModEnabled("MODCalveraSystem")) {
-//                stationsystem = Global.getSector().getStarSystem("calvera")
-//            }
+            if (Global.getSettings().modManager.isModEnabled("MODCalveraSystem")) {
+                stationsystem = Global.getSector().getStarSystem("calvera")
+            }
             val station: SectorEntityToken = stationsystem.addCustomEntity("ds_nexusStorage", "Mothership Global Storage", "station_side05", Factions.NEUTRAL)
             Misc.setAbandonedStationMarket("ds_nexusStorage", station)
             station.sensorProfile = 0f
@@ -173,9 +173,9 @@ class ds_remnantCustomStart: CustomStart() {
             Global.getSector().listenerManager.addListener(ds_nexusRestocker())
             FactionCommissionIntel(Global.getSector().getFaction(Factions.DERELICT)).missionAccepted()
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", startloc.id)
-//            if (Global.getSettings().modManager.isModEnabled("MODCalveraSystem")) {
-//                Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", "calvera_mothership")
-//            }
+            if (Global.getSettings().modManager.isModEnabled("MODCalveraSystem")) {
+                Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", "calvera_mothership")
+            }
 
             if (Global.getSettings().modManager.isModEnabled("dex")) {
                 val remmy = Global.getSector().getFaction(Factions.DERELICT)
